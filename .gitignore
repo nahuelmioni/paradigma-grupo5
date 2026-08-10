@@ -1,0 +1,13 @@
+# IntelliJ IDEA
+.idea/
+*.iml
+
+# Archivos compilados de Java
+*.class
+out/
+
+# macOS
+.DS_Store
+
+# Herramientas
+.claude/
