@@ -1,4 +1,4 @@
-public class ClasificacionCalificacion {
+public class ejercicio1 {
  public static void main(String[] args) {
  int puntaje = 76;
  char calificacion;
