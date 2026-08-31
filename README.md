@@ -35,7 +35,7 @@ Soy Nahuel, estudiante de la Licenciatura en informática. En esta materia me gu
 
 <img width="200" height="200" alt="image" src="https://github.com/user-attachments/assets/646fdba2-84f9-433a-9a26-fb45dd4e2a17" />
 
-Soy Santiago terminiello
+Soy Santiago terminiello Estudiante de Licenciatura en Gestión de Tecnología de la Información (Sistemas), actualmente cursando la carrera y con disponibilidad full time. Cuento con experiencia en gestión de emprendimiento propio, desarrollando habilidades en atención al cliente, organización administrativa y manejo de herramientas digitales. Poseo nivel de inglés intermedio (PET) y conocimientos en herramientas tecnológicas y creativas. Busco incorporarme a una organización donde pueda adquirir experiencia, aportar compromiso y continuar desarrollándome profesionalmente.
 
 
 
