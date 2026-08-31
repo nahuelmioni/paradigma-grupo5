@@ -41,7 +41,7 @@ Soy Santiago terminiello
 
 <img width="200" height="200" alt="image" src="https://github.com/user-attachments/assets/ccf2c341-8021-4759-b45c-9b4d8ed5a8fa" />
 
-Soy Matias Llanos
+Soy Matias Llanos, estudiante de segundo año de Ingeniería en Informática en UADE, en esta etapa en la que incorporé las herramientas centrales de la carrera para resolver problemas tecnológicos, abarcando desde el modelado de un sistema y la escritura de código, hasta la gestión operativa en entornos Linux A la par de lo académico, desarrollo un marcado interés por el hardware, contando con conocimientos para el armado, y soporte de computadoras.
 
 <img width="200" height="200" alt="image" src="https://github.com/user-attachments/assets/52559f09-a2ab-40dc-8caf-c80fc6f86601" />
 
