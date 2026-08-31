@@ -45,7 +45,7 @@ Soy Matias Llanos, estudiante de segundo año de Ingeniería en Informática en 
 
 <img width="200" height="200" alt="image" src="https://github.com/user-attachments/assets/52559f09-a2ab-40dc-8caf-c80fc6f86601" />
 
-
+Soy Joaquín Valdettaro, estudiante de Ingeniería en Informática de 19 años. Cuento con experiencia práctica en soporte técnico de equipos y mantenimiento de hardware y software, además de conocimientos en programación con Java y Python. Me destaco por tener una fuerte iniciativa, responsabilidad, creatividad y una actitud obstinada frente a los desafíos. Apunto siempre a cumplir objetivos altos, aportando una visión proactiva y resolutiva para colaborar de la mejor manera en cada proyecto grupal.
 
 
 
