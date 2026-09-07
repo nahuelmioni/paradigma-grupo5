@@ -59,3 +59,5 @@ Los ejercicios se suben en una carpeta por clase (clase-01, clase-02, etc.).
 📅 Fecha: 10/08 💻 Actividad: Actividad 1 - Estructuras de control (clasificacion de calificaciones). ✅ Entrega: -
 
 📅 Fecha: 24/08 💻 Actividad: Guia de ejercitacion - JVM, convenciones de nomenclatura y arreglos. Actividad integradora: Registro de Temperaturas. ✅ Entrega: -
+
+📅 Fecha: 31/08 💻 Actividad: Actividad integradora en grupo - Modelado UML aplicado a un sistema universitario (diagrama de clases, diagrama de secuencia y puente a Java). ✅ Entrega: 01/09
