@@ -1,6 +1,6 @@
 # Modelado UML aplicado a un sistema universitario
 
-**Actividad integradora en grupo — Clase 3**
+**Actividad integradora en grupo — Clase 4**
 Programación Orientada a Objetos · UADE · Lunes tarde
 
 | | |
