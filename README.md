@@ -52,7 +52,7 @@ Soy Joaquín Valdettaro, estudiante de Ingeniería en Informática de 19 años. 
 
 ## Bitacora
 
-Los ejercicios se suben en una carpeta por clase (clase-01, clase-02, etc.).
+Los ejercicios se suben en una carpeta por clase (clase-01, clase-02, etc.). El TPO va aparte, en la carpeta `TPO`.
 
 📅 Fecha: 03/08 💻 Actividad: Creacion del repositorio y del README del grupo. ✅ Entrega: -
 
@@ -61,3 +61,5 @@ Los ejercicios se suben en una carpeta por clase (clase-01, clase-02, etc.).
 📅 Fecha: 24/08 💻 Actividad: Guia de ejercitacion - JVM, convenciones de nomenclatura y arreglos. Actividad integradora: Registro de Temperaturas. ✅ Entrega: -
 
 📅 Fecha: 31/08 💻 Actividad: Actividad integradora en grupo - Modelado UML aplicado a un sistema universitario (diagrama de clases, diagrama de secuencia y puente a Java). ✅ Entrega: 01/09
+
+📅 Fecha: 28/09 💻 Actividad: TPO - Batalla Naval con Trampolines. Manual del juego y documento técnico (clases, diagramas UML y plan de trabajo). ✅ Entrega: -
