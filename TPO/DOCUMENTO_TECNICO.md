@@ -42,20 +42,6 @@ paradigma-grupo5/
         └── Trampolin.java
 ```
 
-**Compilar y ejecutar** desde la carpeta `TPO/`:
-
-```bash
-cd TPO
-javac -encoding UTF-8 -d out src/*.java
-java -cp out Main
-```
-
-`-encoding UTF-8` evita problemas con las tildes y la ñ de los mensajes. Si usan IntelliJ o Eclipse, marquen `TPO/src/` como carpeta de fuentes.
-
-El `.gitignore` del repositorio ya ignora `out/`, `*.class`, `.idea/`, `*.iml` y `.DS_Store`, así que no se suben archivos compilados ni de configuración del editor.
-
----
-
 ## 2. Diagrama de clases
 
 ```mermaid
