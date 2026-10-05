@@ -4,7 +4,7 @@ Paradigma Orientado a Objetos · UADE · 2.º cuatrimestre 2026
 
 Este documento es la referencia para programar el juego: qué clases hay, qué hace cada método, cómo se conectan y en qué orden conviene implementarlas. Las reglas para jugar están en el manual, en esta misma carpeta ([`Manual_Batalla_Naval_con_Trampolines.docx`](Manual_Batalla_Naval_con_Trampolines.docx)); acá se citan por su número.
 
-- **Lenguaje:** Java, por consola, sin librerías externas (solo `java.util.Scanner`).
+- **Lenguaje:** Java, por consola.
 - **Clases:** 12, una por archivo `.java`, todas en el paquete por defecto.
 - **Idea central:** cada casilla guarda un `ElementoMarino` (agua, barco o trampolín) y cada uno responde a la bomba a su manera. Así el tablero nunca tiene que preguntar qué hay en una casilla.
 
