@@ -139,16 +139,7 @@ classDiagram
         +recibirBomba() Resultado
         +getSimbolo(boolean recibioBomba) char
     }
-    class Resultado {
-        <<enumeration>>
-        AGUA
-        TOCADO
-        HUNDIDO
-        REBOTE
-        YA_BOMBARDEADA
-    }
 
-    Main ..> Partida : crea
     Partida "1" *-- "2" Jugador
     Partida "1" --> "1" Consola
     Jugador "1" *-- "1" Tablero
@@ -159,7 +150,6 @@ classDiagram
     ElementoMarino <|-- Agua
     ElementoMarino <|-- Barco
     ElementoMarino <|-- Trampolin
-    ElementoMarino ..> Resultado : devuelve
 ```
 
 Rombo lleno = composición (la parte no existe sin el todo). Rombo vacío = agregación. Triángulo = herencia. Flecha punteada = dependencia. `$` = `static` y `*` = abstracto.
