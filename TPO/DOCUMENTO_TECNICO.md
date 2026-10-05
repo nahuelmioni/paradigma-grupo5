@@ -12,13 +12,6 @@ Este documento es la referencia para programar el juego: qué clases hay, qué h
 
 1. [Estructura del repositorio](#1-estructura-del-repositorio)
 2. [Diagrama de clases](#2-diagrama-de-clases)
-3. [Detalle de cada clase](#3-detalle-de-cada-clase)
-4. [Flujo del programa](#4-flujo-del-programa)
-5. [Un disparo con rebote](#5-un-disparo-con-rebote)
-6. [Dónde se cumple cada regla](#6-dónde-se-cumple-cada-regla)
-7. [Conceptos de POO en el diseño](#7-conceptos-de-poo-en-el-diseño)
-8. [Plan de trabajo por etapas](#8-plan-de-trabajo-por-etapas)
-9. [Casos de prueba](#9-casos-de-prueba)
 
 ---
 
