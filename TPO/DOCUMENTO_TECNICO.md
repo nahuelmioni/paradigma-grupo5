@@ -48,9 +48,6 @@ paradigma-grupo5/
 classDiagram
     direction TB
 
-    class Main {
-        +main(String[] args)$ void
-    }
     class Partida {
         -Jugador jugador1
         -Jugador jugador2
