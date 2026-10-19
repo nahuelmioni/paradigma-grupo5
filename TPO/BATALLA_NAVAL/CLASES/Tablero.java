@@ -1,5 +1,7 @@
 package TPO.BATALLA_NAVAL.CLASES;
 
+import java.util.ArrayList;
+
 import TPO.BATALLA_NAVAL.CLASES.ELEMENTOS_MARINOS.Barco;
 import TPO.BATALLA_NAVAL.CLASES.ELEMENTOS_MARINOS.Trampolin;
 import TPO.BATALLA_NAVAL.TDAs.FlotaImp;
@@ -133,5 +135,9 @@ public class Tablero {
         }
 
         return dibujo;
+    }
+
+    public ArrayList<Barco> getBarcosOrdenados() {
+        return flota.getBarcosOrdenados();
     }
 }

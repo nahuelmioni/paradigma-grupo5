@@ -2,14 +2,15 @@ package TPO.BATALLA_NAVAL.TDAs;
 
 import TPO.BATALLA_NAVAL.CLASES.ELEMENTOS_MARINOS.Barco;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
 public class FlotaImp implements FlotaInterfaz {
 
-    private Barco[] barcos;
-    private int cantidad;
+    private ArrayList<Barco> barcos;
 
     public FlotaImp() {
-        barcos = new Barco[4];
-        cantidad = 0;
+        barcos = new ArrayList<Barco>();
     }
 
     @Override
@@ -19,27 +20,26 @@ public class FlotaImp implements FlotaInterfaz {
             return false;
         }
 
-        barcos[cantidad] = barco;
-        cantidad++;
+        barcos.add(barco);
 
         return true;
     }
 
     @Override
     public boolean estaCompleta() {
-        return cantidad == barcos.length;
+        return barcos.size() == 4;
     }
 
     @Override
     public boolean estaHundida() {
 
-        if (cantidad == 0) {
+        if (barcos.isEmpty()) {
             return false;
         }
 
-        for (int i = 0; i < cantidad; i++) {
+        for (Barco barco : barcos) {
 
-            if (!barcos[i].estaHundido()) {
+            if (!barco.estaHundido()) {
                 return false;
             }
         }
@@ -49,6 +49,16 @@ public class FlotaImp implements FlotaInterfaz {
 
     @Override
     public int cantidadBarcos() {
-        return cantidad;
+        return barcos.size();
+    }
+
+    @Override
+    public ArrayList<Barco> getBarcosOrdenados() {
+
+        ArrayList<Barco> barcosOrdenados = new ArrayList<Barco>(barcos);
+
+        Collections.sort(barcosOrdenados); //Usa automaticamente el CompareTO de la clase barco.
+
+        return barcosOrdenados;
     }
 }

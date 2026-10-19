@@ -42,6 +42,8 @@ public class Main {
                     rival.getTablero().dibujar(false)
             );
 
+            consola.mostrarFlota(actual.getTablero().getBarcosOrdenados());
+
             Coordenada disparo = consola.pedirCoordenada("¿Donde tiras la bomba? ");
 
             while (!partida.puedeDisparar(disparo)) {

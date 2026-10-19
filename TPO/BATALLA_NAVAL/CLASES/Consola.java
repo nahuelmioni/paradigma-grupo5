@@ -2,6 +2,10 @@ package TPO.BATALLA_NAVAL.CLASES;
 
 import java.util.Scanner;
 
+import TPO.BATALLA_NAVAL.CLASES.ELEMENTOS_MARINOS.Barco;
+
+import java.util.ArrayList;
+
 public class Consola {
 
     private Scanner scanner;
@@ -92,4 +96,28 @@ public class Consola {
         System.out.println("Presione Enter para continuar...");
         scanner.nextLine();
     }
+
+    public void mostrarFlota(ArrayList<Barco> barcos) {
+
+    System.out.println("Tu flota:");
+
+    for (Barco barco : barcos) {
+
+        String estado;
+
+        if (barco.estaHundido()) {
+            estado = "Hundido";
+        } else {
+            estado = "Activo";
+        }
+
+        System.out.println(
+                barco.getNombre()
+                + " - Largo " + barco.getLargo()
+                + " - " + estado
+        );
+    }
+}
+
+
 }
