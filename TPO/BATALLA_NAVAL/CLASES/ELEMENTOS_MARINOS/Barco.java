@@ -2,7 +2,7 @@ package TPO.BATALLA_NAVAL.CLASES.ELEMENTOS_MARINOS;
 
 import TPO.BATALLA_NAVAL.CLASES.Resultado;
 
-public class Barco extends ElementoMarino {
+public class Barco extends ElementoMarino implements Comparable<Barco> {
 
     private String nombre;
     private int largo;
@@ -47,5 +47,10 @@ public class Barco extends ElementoMarino {
         }
 
         return 'B';
+    }
+
+    @Override
+    public int compareTo(Barco otroBarco) {  //Define que la comparacion entre los barcos sea por su largo
+        return Integer.compare(otroBarco.largo, this.largo);
     }
 }

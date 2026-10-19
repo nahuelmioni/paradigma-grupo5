@@ -50,7 +50,7 @@ public class Partida {
         return resultado;
     }
 
-    public Resultado disparar(int fila, int columna) {
+    public Resultado disparar(int fila, int columna) {  //Sobregarca de metodos (para swing)
         return disparar(new Coordenada(fila, columna));
     }
 
