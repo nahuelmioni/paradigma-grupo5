@@ -1,0 +1,2 @@
+Repositorio de Batalla Naval.
+Prueba inicial de Git.
