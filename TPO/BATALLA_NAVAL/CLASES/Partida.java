@@ -50,6 +50,10 @@ public class Partida {
         return resultado;
     }
 
+    public Resultado disparar(int fila, int columna) {
+        return disparar(new Coordenada(fila, columna));
+    }
+
     private void rebotar(Jugador tirador, Jugador rival) {
 
         Jugador destino = tirador;

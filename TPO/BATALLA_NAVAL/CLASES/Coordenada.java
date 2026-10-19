@@ -10,7 +10,7 @@ public class Coordenada {
         this.columna = columna;
     }
 
-    public Coordenada(char fila, int columna) {
+    public Coordenada(char fila, int columna) {  //Sobrecarga de constructores y uso de this()
         this(fila - 'A', columna - 1);
     }
 

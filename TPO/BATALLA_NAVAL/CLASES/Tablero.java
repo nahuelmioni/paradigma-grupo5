@@ -2,20 +2,20 @@ package TPO.BATALLA_NAVAL.CLASES;
 
 import TPO.BATALLA_NAVAL.CLASES.ELEMENTOS_MARINOS.Barco;
 import TPO.BATALLA_NAVAL.CLASES.ELEMENTOS_MARINOS.Trampolin;
+import TPO.BATALLA_NAVAL.TDAs.FlotaImp;
 
 public class Tablero {
 
     public static final int TAMANIO = 10;
 
     private Casilla[][] casillas;
-    private Barco[] flota;
-    private int cantidadBarcos;
+    private FlotaImp flota;
+    
 
     public Tablero() {
 
         casillas = new Casilla[TAMANIO][TAMANIO];
-        flota = new Barco[4];
-        cantidadBarcos = 0;
+        flota = new FlotaImp();
 
         for (int fila = 0; fila < TAMANIO; fila++) {
             for (int columna = 0; columna < TAMANIO; columna++) {
@@ -29,7 +29,7 @@ public class Tablero {
             Coordenada inicio,
             boolean horizontal) {
 
-        if (cantidadBarcos >= flota.length) {
+        if (flota.estaCompleta()) {  //Metodo del TDA
             return false;
         }
 
@@ -51,8 +51,7 @@ public class Tablero {
             casillas[fila][columna].ponerElemento(barco);
         }
 
-        flota[cantidadBarcos] = barco;
-        cantidadBarcos++;
+        flota.agregarBarco(barco); //Metodo del TDA
 
         return true;
     }
@@ -112,19 +111,7 @@ public class Tablero {
     }
 
     public boolean flotaHundida() {
-
-        if (cantidadBarcos == 0) {
-            return false;
-        }
-
-        for (int i = 0; i < cantidadBarcos; i++) {
-
-            if (!flota[i].estaHundido()) {
-                return false;
-            }
-        }
-
-        return true;
+        return flota.estaHundida(); //Metodo del TDA
     }
 
     public String dibujar(boolean esPropio) {
