@@ -10,6 +10,10 @@ public class Coordenada {
         this.columna = columna;
     }
 
+    public Coordenada(char fila, int columna) {
+        this(fila - 'A', columna - 1);
+    }
+
     public static Coordenada desdeTexto(String texto) {
 
         if (texto == null) {
@@ -40,9 +44,7 @@ public class Coordenada {
             return null;
         }
 
-        int fila = letraFila - 'A';
-
-        return new Coordenada(fila, columna - 1);
+        return new Coordenada(letraFila, columna);
     }
 
     public int getFila() {

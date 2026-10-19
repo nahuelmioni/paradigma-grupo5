@@ -4,6 +4,10 @@ import TPO.BATALLA_NAVAL.CLASES.Resultado;
 
 public class Agua extends ElementoMarino {
 
+    public Agua() {
+        super(false);
+    }
+
     @Override
     public Resultado recibirBomba() {
         return new Resultado(Resultado.AGUA);
@@ -17,10 +21,5 @@ public class Agua extends ElementoMarino {
         }
 
         return '~';
-    }
-
-    @Override
-    public boolean ocupaLugar() {
-        return false;
     }
 }

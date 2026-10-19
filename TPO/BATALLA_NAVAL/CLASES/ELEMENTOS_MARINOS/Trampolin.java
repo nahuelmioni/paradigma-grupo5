@@ -4,6 +4,10 @@ import TPO.BATALLA_NAVAL.CLASES.Resultado;
 
 public class Trampolin extends ElementoMarino {
 
+    public Trampolin() {
+        super(true);
+    }
+
     @Override
     public Resultado recibirBomba() {
         return new Resultado(Resultado.TRAMPOLIN);
@@ -13,7 +17,7 @@ public class Trampolin extends ElementoMarino {
     public char getSimbolo(boolean recibioBomba) {
 
         if (recibioBomba) {
-            return 'R'; //ROTO
+            return 'R';
         }
 
         return 'T';

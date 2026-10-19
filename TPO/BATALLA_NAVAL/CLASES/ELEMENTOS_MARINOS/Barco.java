@@ -9,6 +9,7 @@ public class Barco extends ElementoMarino {
     private int impactos;
 
     public Barco(String nombre, int largo) {
+        super(true);
         this.nombre = nombre;
         this.largo = largo;
         this.impactos = 0;
