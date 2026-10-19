@@ -1,0 +1,37 @@
+sequenceDiagram
+    participant P as partida : Partida
+    participant C as consola : Consola
+    participant TR as tabRival : Tablero
+    participant CR as casillaRival : Casilla
+    participant T as trampolin : Trampolin
+    participant TD as destino : Tablero
+    participant CD as casilla : Casilla
+    participant E as elemento : ElementoMarino
+
+    P->>+C: pedirCoordenada("¿Dónde tirás la bomba? ")
+    C-->>-P: E8
+    P->>+TR: recibirBomba(E8)
+    TR->>+CR: recibirBomba()
+    CR->>+T: recibirBomba()
+    T-->>-CR: REBOTE
+    CR-->>-TR: REBOTE
+    TR-->>-P: REBOTE
+    opt resultado == REBOTE
+        P->>+P: rebotar(tirador, rival)
+        Note over P,TD: La primera vez, destino es el tablero del que tiró
+        loop mientras resultado == REBOTE
+            P->>+TD: casillaAlAzarSinBomba()
+            TD-->>-P: c
+            P->>C: mostrar("¡Trampolín! La bomba rebota y cae en ..., en c")
+            P->>+TD: recibirBomba(c)
+            TD->>+CD: recibirBomba()
+            CD->>+E: recibirBomba()
+            Note right of E: Agua, Barco o Trampolin:<br/>cada uno responde a su manera
+            E-->>-CD: resultado
+            CD-->>-TD: resultado
+            TD-->>-P: resultado
+            P->>C: mostrar(describir(resultado, enTuTablero))
+            Note over P,TD: destino pasa a ser el otro tablero
+        end
+        deactivate P
+    end
