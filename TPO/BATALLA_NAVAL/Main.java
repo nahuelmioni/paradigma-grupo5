@@ -42,25 +42,17 @@ public class Main {
                     rival.getTablero().dibujar(false)
             );
 
-            Coordenada disparo =
-                    consola.pedirCoordenada("¿Donde tiras la bomba? ");
+            Coordenada disparo = consola.pedirCoordenada("¿Donde tiras la bomba? ");
 
             while (!partida.puedeDisparar(disparo)) {
 
-                consola.mostrar(
-                        "Ya se disparo en esa casilla. Elegi otra."
-                );
-
-                disparo = consola.pedirCoordenada(
-                        "¿Donde tiras la bomba? "
-                );
+                consola.mostrar("Ya se disparo en esa casilla. Elegi otra.");
+                disparo = consola.pedirCoordenada("¿Donde tiras la bomba? ");
             }
 
             Resultado resultado = partida.disparar(disparo);
 
-            consola.mostrar(
-                    "Resultado: " + resultado
-            );
+            consola.mostrar("Resultado: " + resultado);
 
             if (partida.termino()) {
                 break;
@@ -72,15 +64,11 @@ public class Main {
             partida.cambiarTurno();
         }
 
-        consola.mostrar(
-                "Ganador: " + partida.getGanador().getNombre()
-        );
+        consola.mostrar("Ganador: " + partida.getGanador().getNombre());
     }
 
 
-    private static void prepararJugador(
-            Consola consola,
-            Jugador jugador) {
+    private static void prepararJugador(Consola consola, Jugador jugador) {
 
         Tablero tablero = jugador.getTablero();
 
@@ -108,74 +96,47 @@ public class Main {
                 new Barco("Acorazado", 4)
         );
 
-        for (int i = 1; i <= 4; i++) {
+        for (int i = 1; i <= 4; i++) {  //Ya colocados los barcos, se pasa a colocar los trampolines
 
             boolean colocado = false;
 
             while (!colocado) {
 
-                consola.mostrar(
-                        tablero.dibujar(true)
-                );
+                consola.mostrar(tablero.dibujar(true));
 
-                Coordenada coordenada =
-                        consola.pedirCoordenada(
-                                "Posicion del trampolin " + i + ": "
-                        );
+                Coordenada coordenada = consola.pedirCoordenada("Posicion del trampolin " + i + ": ");
 
-                colocado =
-                        tablero.colocarTrampolin(coordenada);
+                colocado = tablero.colocarTrampolin(coordenada);
 
                 if (!colocado) {
-                    consola.mostrar(
-                            "Esa casilla ya esta ocupada."
-                    );
+                    consola.mostrar("Esa casilla ya esta ocupada.");
                 }
             }
         }
     }
 
 
-    private static void colocarBarco(
-            Consola consola,
-            Tablero tablero,
-            Barco barco) {
+    private static void colocarBarco(Consola consola, Tablero tablero, Barco barco) {
 
         boolean colocado = false;
 
         while (!colocado) {
 
-            consola.mostrar(
-                    tablero.dibujar(true)
-            );
+            consola.mostrar(tablero.dibujar(true));
 
-            consola.mostrar(
-                    "Colocando " +
-                    barco.getNombre() +
-                    " (largo " +
-                    barco.getLargo() +
-                    ")"
-            );
+            consola.mostrar("Colocando " + barco.getNombre() + " (largo " + barco.getLargo() + ")");
 
-            Coordenada inicio =
-                    consola.pedirCoordenada(
-                            "Casilla inicial: "
-                    );
+            Coordenada inicio = consola.pedirCoordenada("Casilla inicial: ");
 
-            boolean horizontal =
-                    consola.pedirOrientacion();
+            boolean horizontal = consola.pedirOrientacion();
 
-            colocado =
-                    tablero.colocarBarco(
+            colocado = tablero.colocarBarco(
                             barco,
                             inicio,
                             horizontal
-                    );
+                        );
 
-            if (!colocado) {
-                consola.mostrar(
-                        "No se puede colocar el barco ahi."
-                );
+            if (!colocado) {consola.mostrar("No se puede colocar el barco ahi.");
             }
         }
     }

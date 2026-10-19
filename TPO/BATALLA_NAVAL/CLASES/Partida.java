@@ -30,9 +30,7 @@ public class Partida {
     }
 
     public boolean puedeDisparar(Coordenada coordenada) {
-        return !getRivalActual()
-                .getTablero()
-                .yaRecibioBomba(coordenada);
+        return !getRivalActual().getTablero().yaRecibioBomba(coordenada);
     }
 
     public Resultado disparar(Coordenada coordenada) {
@@ -43,8 +41,7 @@ public class Partida {
             return null;
         }
 
-        Resultado resultado =
-                rival.getTablero().recibirBomba(coordenada);
+        Resultado resultado = rival.getTablero().recibirBomba(coordenada);
 
         if (resultado.getTipo() == Resultado.TRAMPOLIN) {
             rebotar(jugadorActual, rival);
@@ -60,17 +57,14 @@ public class Partida {
 
         while (!termino()) {
 
-            Coordenada coordenada =
-                    generarCoordenadaAleatoria(destino.getTablero());
-
-            Resultado resultado =
-                    destino.getTablero().recibirBomba(coordenada);
+            Coordenada coordenada = generarCoordenadaAleatoria(destino.getTablero());
+            Resultado resultado = destino.getTablero().recibirBomba(coordenada);
 
             if (resultado.getTipo() != Resultado.TRAMPOLIN) {
                 return;
             }
 
-            Jugador auxiliar = destino;
+            Jugador auxiliar = destino;  //Cuando cae en otro trampolin, invierte roles
             destino = otroTablero;
             otroTablero = auxiliar;
         }
