@@ -32,10 +32,10 @@ public class Coordenada {
             return null;
         }
 
-        int columna;
+        Integer columna;
 
         try {
-            columna = Integer.parseInt(texto.substring(1));
+            columna = Integer.valueOf(texto.substring(1));  //valueOf devuelve un Integer a partir de un texto.
         } catch (NumberFormatException e) {
             return null;
         }

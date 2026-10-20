@@ -10,6 +10,13 @@ public class Barco extends ElementoMarino implements Comparable<Barco> {
 
     public Barco(String nombre, int largo) {
         super(true);
+
+        if (largo <= 0) {
+            throw new IllegalArgumentException(
+                    "El largo del barco debe ser mayor a 0."
+            );
+        }
+
         this.nombre = nombre;
         this.largo = largo;
         this.impactos = 0;

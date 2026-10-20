@@ -4,7 +4,7 @@ import TPO.BATALLA_NAVAL.CLASES.*;
 import TPO.BATALLA_NAVAL.CLASES.ELEMENTOS_MARINOS.*;
 
 
-public class Main {
+class Main {  //Default
 
     public static void main(String[] args) {
 
@@ -44,16 +44,24 @@ public class Main {
 
             consola.mostrarFlota(actual.getTablero().getBarcosOrdenados());
 
-            Coordenada disparo = consola.pedirCoordenada("¿Donde tiras la bomba? ");
+            Resultado resultado = null;
+            boolean disparoValido = false;
 
-            while (!partida.puedeDisparar(disparo)) {
+            while (!disparoValido) {
 
-                consola.mostrar("Ya se disparo en esa casilla. Elegi otra.");
-                disparo = consola.pedirCoordenada("¿Donde tiras la bomba? ");
+                Coordenada disparo = consola.pedirCoordenada("¿Donde tiras la bomba? ");
+
+                try {
+                    resultado = partida.disparar(disparo);
+                    disparoValido = true;
+
+                } catch (CasillaYaAtacadaException e) {
+
+                    consola.mostrar(e.getMessage());
+                } finally {
+                    consola.mostrar("Intento de disparo finalizado");
+                }
             }
-
-            Resultado resultado = partida.disparar(disparo);
-
             consola.mostrar("Resultado: " + resultado);
 
             if (partida.termino()) {
@@ -65,8 +73,12 @@ public class Main {
 
             partida.cambiarTurno();
         }
+        try {
+            consola.mostrar("Ganador: " + partida.getGanador().getNombre());
+        } catch (IllegalStateException e){
+            consola.mostrar(e.getMessage());
 
-        consola.mostrar("Ganador: " + partida.getGanador().getNombre());
+        }
     }
 
 

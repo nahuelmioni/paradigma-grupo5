@@ -26,24 +26,25 @@ public class Tablero {
         }
     }
 
-    public boolean colocarBarco(
-            Barco barco,
-            Coordenada inicio,
-            boolean horizontal) {
-
-        if (flota.estaCompleta()) {  //Metodo del TDA
-            return false;
-        }
+    public boolean colocarBarco(Barco barco, Coordenada inicio, boolean horizontal) {
 
         if (!hayLugar(inicio, barco.getLargo(), horizontal)) {
             return false;
         }
 
-        for (int i = 0; i < barco.getLargo(); i++) {
+        try {
+            flota.agregarBarco(barco);   //Metodo TDA
 
+        } catch (IllegalStateException e) {
+
+            return false;
+        }
+
+        for (int i = 0; i < barco.getLargo(); i++) {
+            
             int fila = inicio.getFila();
             int columna = inicio.getColumna();
-
+            
             if (horizontal) {
                 columna = columna + i;
             } else {
@@ -52,8 +53,6 @@ public class Tablero {
 
             casillas[fila][columna].ponerElemento(barco);
         }
-
-        flota.agregarBarco(barco); //Metodo del TDA
 
         return true;
     }

@@ -5,7 +5,7 @@ import TPO.BATALLA_NAVAL.CLASES.ELEMENTOS_MARINOS.Barco;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class FlotaImp implements FlotaInterfaz {
+public class FlotaImp implements FlotaInterfaz { 
 
     private ArrayList<Barco> barcos;
 
@@ -17,7 +17,7 @@ public class FlotaImp implements FlotaInterfaz {
     public boolean agregarBarco(Barco barco) {
 
         if (estaCompleta()) {
-            return false;
+            throw new IllegalStateException( "La flota ya esta completa");
         }
 
         barcos.add(barco);

@@ -33,12 +33,13 @@ public class Partida {
         return !getRivalActual().getTablero().yaRecibioBomba(coordenada);
     }
 
-    public Resultado disparar(Coordenada coordenada) {
+    public Resultado disparar(Coordenada coordenada)
+            throws CasillaYaAtacadaException {
 
         Jugador rival = getRivalActual();
 
         if (rival.getTablero().yaRecibioBomba(coordenada)) {
-            return null;
+            throw new CasillaYaAtacadaException("Ya se disparo en esa casilla. Elegi otra.");
         }
 
         Resultado resultado = rival.getTablero().recibirBomba(coordenada);
@@ -50,7 +51,8 @@ public class Partida {
         return resultado;
     }
 
-    public Resultado disparar(int fila, int columna) {  //Sobregarca de metodos (para swing)
+    public Resultado disparar(int fila, int columna)
+            throws CasillaYaAtacadaException {               //Sobregarca de metodos (para swing)
         return disparar(new Coordenada(fila, columna));
     }
 
@@ -106,7 +108,7 @@ public class Partida {
     public Jugador getGanador() {
 
         if (!termino()) {
-            return null;
+            throw new IllegalStateException ("La partida no termino");
         }
 
         if (jugador1.perdio()) {
