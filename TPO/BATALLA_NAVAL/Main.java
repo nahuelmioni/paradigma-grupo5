@@ -1,5 +1,6 @@
 package TPO.BATALLA_NAVAL;
-
+import javax.swing.SwingUtilities;
+import TPO.BATALLA_NAVAL.INTERFAZ.VentanaPrincipal; 
 import TPO.BATALLA_NAVAL.CLASES.*;
 import TPO.BATALLA_NAVAL.CLASES.ELEMENTOS_MARINOS.*;
 
@@ -7,6 +8,13 @@ import TPO.BATALLA_NAVAL.CLASES.ELEMENTOS_MARINOS.*;
 class Main {  //Default
 
     public static void main(String[] args) {
+
+         SwingUtilities.invokeLater(() -> {
+
+            VentanaPrincipal ventana = new VentanaPrincipal();
+            ventana.setVisible(true);
+
+        });
 
         Consola consola = new Consola();
 

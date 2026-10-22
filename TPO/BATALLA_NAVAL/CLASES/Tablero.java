@@ -111,6 +111,15 @@ public class Tablero {
         return casillas[coordenada.getFila()][coordenada.getColumna()].recibirBomba();
     }
 
+    public char getSimbolo(Coordenada coordenada, boolean esPropio) { //Para que el swing recree el tablero rival en la botonera.
+
+        int fila = coordenada.getFila();       // Obtiene la fila de la casilla consultada
+        int columna = coordenada.getColumna(); // Obtiene la columna de la casilla consultada
+
+        return casillas[fila][columna]
+                .getSimbolo(esPropio);         // Devuelve el simbolo que corresponde mostrar
+    }
+
     public boolean flotaHundida() {
         return flota.estaHundida(); //Metodo del TDA
     }
