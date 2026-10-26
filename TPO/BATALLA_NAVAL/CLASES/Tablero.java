@@ -71,10 +71,7 @@ public class Tablero {
         return true;
     }
 
-    private boolean hayLugar(
-            Coordenada inicio,
-            int largo,
-            boolean horizontal) {
+    private boolean hayLugar(Coordenada inicio, int largo, boolean horizontal) {
 
         for (int i = 0; i < largo; i++) {
 

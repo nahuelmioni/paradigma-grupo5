@@ -52,28 +52,20 @@ public class PanelInicio extends JPanel {
 
     private void comenzarPartida() {
 
-        String nombreJugador1 =
-                campoJugador1.getText().trim();
+        String nombreJugador1 = campoJugador1.getText().trim();
 
-        String nombreJugador2 =
-                campoJugador2.getText().trim();
+        String nombreJugador2 = campoJugador2.getText().trim();
 
         if (nombreJugador1.isEmpty()
                 || nombreJugador2.isEmpty()) {
 
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Los dos jugadores deben ingresar un nombre."
-            );
-
+            JOptionPane.showMessageDialog(this, "Los dos jugadores deben ingresar un nombre.");
             return;
         }
 
-        Jugador jugador1 =
-                new Jugador(nombreJugador1);
+        Jugador jugador1 = new Jugador(nombreJugador1);
 
-        Jugador jugador2 =
-                new Jugador(nombreJugador2);
+        Jugador jugador2 = new Jugador(nombreJugador2);
 
         ventana.iniciarPreparacion(
                 jugador1,

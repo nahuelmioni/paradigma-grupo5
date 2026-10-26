@@ -29,15 +29,13 @@ public class PanelJuego extends JPanel {
 
     private JButton[][] botonesDisparo;
 
-    public PanelJuego(
-            Jugador jugador1,
-            Jugador jugador2) {
+    private String resumenUltimoTurno;
 
-        partida =
-                new Partida(
-                        jugador1,
-                        jugador2
-                );
+    public PanelJuego(Jugador jugador1, Jugador jugador2) {
+
+        partida = new Partida(jugador1,jugador2);
+
+        resumenUltimoTurno = null; 
 
         mostrarPantallaEspera();
     }
@@ -48,19 +46,21 @@ public class PanelJuego extends JPanel {
 
         setLayout(new BorderLayout());
 
-        Jugador jugador =
-                partida.getJugadorActual();
+        Jugador jugador = partida.getJugadorActual();
 
-        JLabel mensaje =
-                new JLabel(
-                        "Turno de "
-                                + jugador.getNombre()
-                                + ". Presiona cuando estes listo.",
-                        SwingConstants.CENTER
-                );
+        String textoMensaje = "<html><div style='text-align:center;'>";
 
-        JButton botonListo =
-                new JButton("Estoy listo");
+        if (resumenUltimoTurno != null) {
+
+                textoMensaje = textoMensaje + "<br><br><b>Turno anterior:</b><br>" + resumenUltimoTurno.replace("\n", "<br>") + "<br><br>";
+        }
+
+        textoMensaje = textoMensaje + "<b>Turno de " + jugador.getNombre() + "</b><br>" + "Presiona cuando estes listo para continuar." + "</div></html>";
+
+
+        JLabel mensaje = new JLabel(textoMensaje,SwingConstants.CENTER);
+
+        JButton botonListo = new JButton("Estoy listo");
 
         botonListo.addActionListener(e ->
                 mostrarPantallaJuego()
@@ -108,10 +108,7 @@ public class PanelJuego extends JPanel {
         crearTableroPropio(panelCentral);
         crearBotoneraDisparo(panelCentral);
 
-        add(
-                panelCentral,
-                BorderLayout.CENTER
-        );
+        add(panelCentral,BorderLayout.CENTER);
 
         etiquetaResultado =
                 new JLabel(
@@ -127,39 +124,19 @@ public class PanelJuego extends JPanel {
     private void crearTableroPropio(
             JPanel panelCentral) {
 
-        JPanel panelPropio =
-                new JPanel(
-                        new BorderLayout()
-                );
+        JPanel panelPropio = new JPanel(new BorderLayout());
 
-        JLabel tituloPropio =
-                new JLabel(
-                        "Tu tablero",
-                        SwingConstants.CENTER
-                );
+        JLabel tituloPropio = new JLabel("Tu tablero", SwingConstants.CENTER);
 
-        tableroPropio =
-                new JTextArea();
+        tableroPropio = new JTextArea();
 
         tableroPropio.setEditable(false);
 
-        tableroPropio.setFont(
-                new Font(
-                        Font.MONOSPACED,
-                        Font.PLAIN,
-                        14
-                )
-        );
+        tableroPropio.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 14));
 
-        panelPropio.add(
-                tituloPropio,
-                BorderLayout.NORTH
-        );
+        panelPropio.add(tituloPropio, BorderLayout.NORTH);
 
-        panelPropio.add(
-                new JScrollPane(tableroPropio),
-                BorderLayout.CENTER
-        );
+        panelPropio.add(new JScrollPane(tableroPropio), BorderLayout.CENTER);
 
         panelCentral.add(panelPropio);
     }
@@ -168,36 +145,17 @@ public class PanelJuego extends JPanel {
 
         JPanel contenedorRival = new JPanel(new BorderLayout()); // Contiene titulo + botonera rival
 
-        JLabel tituloRival =
-                new JLabel(
-                        "Tablero rival",
-                        SwingConstants.CENTER
-                ); // Titulo del tablero interactivo
+        JLabel tituloRival = new JLabel("Tablero rival", SwingConstants.CENTER); // Titulo del tablero interactivo
 
-        JPanel panelDisparos =
-                new JPanel(
-                        new GridLayout(
-                                11,
-                                11
-                        )
-                ); // Grilla de coordenadas y botones
+        JPanel panelDisparos = new JPanel(new GridLayout(11,11)); // Grilla de coordenadas y botones
 
-        botonesDisparo =
-                new JButton[10][10];
+        botonesDisparo = new JButton[10][10];
 
-        panelDisparos.add(
-                new JLabel("")
-        );
+        panelDisparos.add( new JLabel(""));
 
-        for (int columna = 1;
-                columna <= 10;
-                columna++) {
+        for (int columna = 1; columna <= 10; columna++) {
 
-            JLabel numero =
-                    new JLabel(
-                            String.valueOf(columna),
-                            SwingConstants.CENTER
-                    );
+            JLabel numero = new JLabel(String.valueOf(columna), SwingConstants.CENTER);
 
             panelDisparos.add(numero);
         }
@@ -216,15 +174,11 @@ public class PanelJuego extends JPanel {
 
             panelDisparos.add(letra);
 
-            for (int columna = 0;
-                    columna < 10;
-                    columna++) {
+            for (int columna = 0; columna < 10; columna++) {
 
-                JButton boton =
-                        new JButton();
+                JButton boton = new JButton();
 
-                botonesDisparo[fila][columna] =
-                        boton;
+                botonesDisparo[fila][columna] = boton;
 
                 final int filaSeleccionada =
                         fila;
@@ -233,45 +187,32 @@ public class PanelJuego extends JPanel {
                         columna;
 
                 boton.addActionListener(e ->
-                        disparar(
-                                filaSeleccionada,
-                                columnaSeleccionada
-                        )
+                        disparar(filaSeleccionada, columnaSeleccionada)
                 );
 
                 panelDisparos.add(boton);
             }
         }
 
-        contenedorRival.add(
-                tituloRival,
-                BorderLayout.NORTH
-        );
+        contenedorRival.add(tituloRival, BorderLayout.NORTH);
 
-        contenedorRival.add(
-                panelDisparos,
-                BorderLayout.CENTER
-        );
+        contenedorRival.add(panelDisparos, BorderLayout.CENTER);
 
         panelCentral.add(contenedorRival);
     }
 
-    private void disparar(
-            int fila,
-            int columna) {
+    private void disparar(int fila, int columna) {
 
-        Coordenada coordenada =
-                new Coordenada(
-                        fila,
-                        columna
-                );
+        Coordenada coordenada = new Coordenada(fila, columna);
+
+        Jugador jugadorQueDispara = partida.getJugadorActual(); // Guarda quien hizo el disparo antes de cambiar el turno
+                                                                 
 
         try {
 
-            Resultado resultado =
-                    partida.disparar(
-                            coordenada
-                    );
+            Resultado resultado =partida.disparar(coordenada);
+
+            resumenUltimoTurno = jugadorQueDispara.getNombre() + " disparo en " + coordenada + ".\nResultado: " + resultado+ "."; // Guarda la informacion que vera el siguiente jugador
 
             actualizarTableros();
 
@@ -292,13 +233,9 @@ public class PanelJuego extends JPanel {
 
             mostrarPantallaEspera();
 
-        } catch (
-                CasillaYaAtacadaException e) {
+        } catch (CasillaYaAtacadaException e) {
 
-            JOptionPane.showMessageDialog(
-                    this,
-                    e.getMessage()
-            );
+            JOptionPane.showMessageDialog(this,e.getMessage());
         }
     }
 
@@ -343,10 +280,7 @@ public class PanelJuego extends JPanel {
         Jugador actual =
                 partida.getJugadorActual();
 
-        etiquetaTurno.setText(
-                "Turno de: "
-                        + actual.getNombre()
-        );
+        etiquetaTurno.setText("Turno de: " + actual.getNombre());
 
         actualizarTableros();
         actualizarBotoneraRival();
@@ -354,8 +288,7 @@ public class PanelJuego extends JPanel {
 
     private void actualizarTableros() {
 
-        Jugador actual =
-                partida.getJugadorActual();
+        Jugador actual = partida.getJugadorActual();
 
         tableroPropio.setText(
                 actual
