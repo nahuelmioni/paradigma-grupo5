@@ -32,9 +32,21 @@ public class VentanaPrincipal extends JFrame {
     public void iniciarJuego(Jugador jugador1, Jugador jugador2) {
 
         PanelJuego panelJuego =
-                new PanelJuego(jugador1, jugador2);
+                new PanelJuego(this, jugador1, jugador2);
 
         setContentPane(panelJuego);
+
+        revalidate();
+        repaint();
+    }
+
+    // Vuelve al menu principal: pone un PanelInicio nuevo en la ventana.
+    // Ese panel arranca otro HiloCargaJugadores, asi que la lista muestra tambien los jugadores creados.
+    public void volverAlInicio() {
+
+        PanelInicio panelInicio = new PanelInicio(this);
+
+        setContentPane(panelInicio);
 
         revalidate();
         repaint();
