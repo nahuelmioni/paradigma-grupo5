@@ -1,0 +1,77 @@
+digraph G {
+  graph [rankdir=TB, fontname="Helvetica", fontsize=16, labelloc=t, labeljust=l, label=<<B>Vista general: clases, paquetes y relaciones</B>>, nodesep=0.45, ranksep=0.75, pad=0.3, newrank=true, splines=spline, bgcolor="white"];
+  node [shape=plaintext, fontname="Helvetica", fontsize=11, margin=0];
+  edge [fontname="Helvetica", fontsize=10, color="#4a5866", fontcolor="#33414e", arrowsize=0.9, labelfontsize=10, labelfontcolor="#1c5d99", labeldistance=1.9, labelangle=28];
+  "JFrame" [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4" BGCOLOR="white" COLOR="#4a5866"><TR><TD BGCOLOR="#e6e6e6" CELLPADDING="6"><B>JFrame</B></TD></TR></TABLE>>];
+  "JPanel" [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4" BGCOLOR="white" COLOR="#4a5866"><TR><TD BGCOLOR="#e6e6e6" CELLPADDING="6"><B>JPanel</B></TD></TR></TABLE>>];
+  "Thread" [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4" BGCOLOR="white" COLOR="#4a5866"><TR><TD BGCOLOR="#e6e6e6" CELLPADDING="6"><B>Thread</B></TD></TR></TABLE>>];
+  "Runnable" [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4" BGCOLOR="white" COLOR="#4a5866"><TR><TD BGCOLOR="#e6e6e6" CELLPADDING="6"><FONT POINT-SIZE="10">«interface»</FONT><BR/><B>Runnable</B></TD></TR></TABLE>>];
+  "Exception" [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4" BGCOLOR="white" COLOR="#4a5866"><TR><TD BGCOLOR="#e6e6e6" CELLPADDING="6"><B>Exception</B></TD></TR></TABLE>>];
+  "Comparable<T>" [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4" BGCOLOR="white" COLOR="#4a5866"><TR><TD BGCOLOR="#e6e6e6" CELLPADDING="6"><FONT POINT-SIZE="10">«interface»</FONT><BR/><B>Comparable&lt;T&gt;</B></TD></TR></TABLE>>];
+  subgraph "cluster_RAIZ" { label=<<B>TPO.BATALLA_NAVAL</B>>; fontsize=13; style="rounded,filled"; fillcolor="#ffffff"; color="#9aa9b8"; margin=14;
+    "Main" [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4" BGCOLOR="white" COLOR="#4a5866"><TR><TD BGCOLOR="#e9eef3" CELLPADDING="6"><B>Main</B></TD></TR></TABLE>>];
+  }
+  subgraph "cluster_INTERFAZ" { label=<<B>INTERFAZ</B>>; fontsize=13; style="rounded,filled"; fillcolor="#f1f6fc"; color="#9aa9b8"; margin=14;
+    "VentanaPrincipal" [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4" BGCOLOR="white" COLOR="#4a5866"><TR><TD BGCOLOR="#d9e8f6" CELLPADDING="6"><B>VentanaPrincipal</B></TD></TR></TABLE>>];
+    "PanelInicio" [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4" BGCOLOR="white" COLOR="#4a5866"><TR><TD BGCOLOR="#d9e8f6" CELLPADDING="6"><B>PanelInicio</B></TD></TR></TABLE>>];
+    "PanelPreparacion" [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4" BGCOLOR="white" COLOR="#4a5866"><TR><TD BGCOLOR="#d9e8f6" CELLPADDING="6"><B>PanelPreparacion</B></TD></TR></TABLE>>];
+    "PanelJuego" [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4" BGCOLOR="white" COLOR="#4a5866"><TR><TD BGCOLOR="#d9e8f6" CELLPADDING="6"><B>PanelJuego</B></TD></TR></TABLE>>];
+    "HiloCargaJugadores" [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4" BGCOLOR="white" COLOR="#4a5866"><TR><TD BGCOLOR="#d9e8f6" CELLPADDING="6"><B>HiloCargaJugadores</B></TD></TR></TABLE>>];
+    "TareaGuardarJugador" [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4" BGCOLOR="white" COLOR="#4a5866"><TR><TD BGCOLOR="#d9e8f6" CELLPADDING="6"><B>TareaGuardarJugador</B></TD></TR></TABLE>>];
+  }
+  subgraph "cluster_CLASES" { label=<<B>CLASES</B>>; fontsize=13; style="rounded,filled"; fillcolor="#f2f8f4"; color="#9aa9b8"; margin=14;
+    "Partida" [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4" BGCOLOR="white" COLOR="#4a5866"><TR><TD BGCOLOR="#d7ecdf" CELLPADDING="6"><B>Partida</B></TD></TR></TABLE>>];
+    "Jugador" [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4" BGCOLOR="white" COLOR="#4a5866"><TR><TD BGCOLOR="#d7ecdf" CELLPADDING="6"><B>Jugador</B></TD></TR></TABLE>>];
+    "Tablero" [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4" BGCOLOR="white" COLOR="#4a5866"><TR><TD BGCOLOR="#d7ecdf" CELLPADDING="6"><B>Tablero</B></TD></TR></TABLE>>];
+    "Casilla" [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4" BGCOLOR="white" COLOR="#4a5866"><TR><TD BGCOLOR="#d7ecdf" CELLPADDING="6"><B>Casilla</B></TD></TR></TABLE>>];
+    "Coordenada" [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4" BGCOLOR="white" COLOR="#4a5866"><TR><TD BGCOLOR="#d7ecdf" CELLPADDING="6"><B>Coordenada</B></TD></TR></TABLE>>];
+    "Resultado" [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4" BGCOLOR="white" COLOR="#4a5866"><TR><TD BGCOLOR="#d7ecdf" CELLPADDING="6"><B>Resultado</B></TD></TR></TABLE>>];
+    "ArchivoJugadores" [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4" BGCOLOR="white" COLOR="#4a5866"><TR><TD BGCOLOR="#d7ecdf" CELLPADDING="6"><B>ArchivoJugadores</B></TD></TR></TABLE>>];
+    "CasillaYaAtacadaException" [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4" BGCOLOR="white" COLOR="#4a5866"><TR><TD BGCOLOR="#d7ecdf" CELLPADDING="6"><B>CasillaYaAtacadaException</B></TD></TR></TABLE>>];
+    "JugadorExistenteException" [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4" BGCOLOR="white" COLOR="#4a5866"><TR><TD BGCOLOR="#d7ecdf" CELLPADDING="6"><B>JugadorExistenteException</B></TD></TR></TABLE>>];
+  }
+  subgraph "cluster_ELEMENTOS" { label=<<B>ELEMENTOS_MARINOS</B>>; fontsize=13; style="rounded,filled"; fillcolor="#fcf6ee"; color="#9aa9b8"; margin=14;
+    "ElementoMarino" [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4" BGCOLOR="white" COLOR="#4a5866"><TR><TD BGCOLOR="#f5e3cc" CELLPADDING="6"><B><I>ElementoMarino</I></B><BR/><FONT POINT-SIZE="10">{abstract}</FONT></TD></TR></TABLE>>];
+    "Agua" [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4" BGCOLOR="white" COLOR="#4a5866"><TR><TD BGCOLOR="#f5e3cc" CELLPADDING="6"><B>Agua</B></TD></TR></TABLE>>];
+    "Barco" [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4" BGCOLOR="white" COLOR="#4a5866"><TR><TD BGCOLOR="#f5e3cc" CELLPADDING="6"><B>Barco</B></TD></TR></TABLE>>];
+    "Trampolin" [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4" BGCOLOR="white" COLOR="#4a5866"><TR><TD BGCOLOR="#f5e3cc" CELLPADDING="6"><B>Trampolin</B></TD></TR></TABLE>>];
+  }
+  subgraph "cluster_TDAS" { label=<<B>TDAs</B>>; fontsize=13; style="rounded,filled"; fillcolor="#f6f3fc"; color="#9aa9b8"; margin=14;
+    "FlotaInterfaz" [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4" BGCOLOR="white" COLOR="#4a5866"><TR><TD BGCOLOR="#e3dcf5" CELLPADDING="6"><FONT POINT-SIZE="10">«interface»</FONT><BR/><B>FlotaInterfaz</B></TD></TR></TABLE>>];
+    "FlotaImp" [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4" BGCOLOR="white" COLOR="#4a5866"><TR><TD BGCOLOR="#e3dcf5" CELLPADDING="6"><B>FlotaImp</B></TD></TR></TABLE>>];
+  }
+  "JFrame" -> "VentanaPrincipal" [dir=back, arrowtail=empty, weight=3];
+  "JPanel" -> "PanelInicio" [dir=back, arrowtail=empty, weight=3];
+  "JPanel" -> "PanelPreparacion" [dir=back, arrowtail=empty, weight=3];
+  "JPanel" -> "PanelJuego" [dir=back, arrowtail=empty, weight=3];
+  "Thread" -> "HiloCargaJugadores" [dir=back, arrowtail=empty, weight=3];
+  "Runnable" -> "TareaGuardarJugador" [dir=back, arrowtail=empty, style=dashed, weight=3];
+  "ElementoMarino" -> "Agua" [dir=back, arrowtail=empty, weight=3];
+  "ElementoMarino" -> "Barco" [dir=back, arrowtail=empty, weight=3];
+  "ElementoMarino" -> "Trampolin" [dir=back, arrowtail=empty, weight=3];
+  "Comparable<T>" -> "Barco" [dir=back, arrowtail=empty, style=dashed, label="T = Barco", weight=3];
+  "FlotaInterfaz" -> "FlotaImp" [dir=back, arrowtail=empty, style=dashed, weight=3];
+  "Exception" -> "CasillaYaAtacadaException" [dir=back, arrowtail=empty, weight=3];
+  "Exception" -> "JugadorExistenteException" [dir=back, arrowtail=empty, weight=3];
+  "Jugador" -> "Tablero" [dir=both, arrowtail=diamond, arrowhead=vee, label="  ", taillabel="1", headlabel="1", weight=2];
+  "Tablero" -> "Casilla" [dir=both, arrowtail=diamond, arrowhead=vee, label="  ", taillabel="1", headlabel="100", weight=2];
+  "Tablero" -> "FlotaImp" [dir=both, arrowtail=diamond, arrowhead=vee, label="  ", taillabel="1", headlabel="1", weight=2];
+  "PanelJuego" -> "Partida" [dir=both, arrowtail=diamond, arrowhead=vee, label="  ", taillabel="1", headlabel="1", weight=2];
+  "PanelInicio" -> "ArchivoJugadores" [dir=both, arrowtail=diamond, arrowhead=vee, label="  ", taillabel="1", headlabel="1", weight=2];
+  "Partida" -> "Jugador" [dir=both, arrowtail=odiamond, arrowhead=vee, label="  ", taillabel="1", headlabel="2", weight=2];
+  "FlotaImp" -> "Barco" [dir=both, arrowtail=odiamond, arrowhead=vee, label="  ", taillabel="1", headlabel="0..4", weight=2];
+  "Casilla" -> "ElementoMarino" [arrowhead=vee, label="  ", taillabel="1..*", headlabel="1"];
+  "PanelPreparacion" -> "Jugador" [arrowhead=vee, label="  ", taillabel="", headlabel="2"];
+  "HiloCargaJugadores" -> "ArchivoJugadores" [arrowhead=vee, label="  ", taillabel="", headlabel="1"];
+  "TareaGuardarJugador" -> "ArchivoJugadores" [arrowhead=vee, label="  ", taillabel="", headlabel="1"];
+  "Main" -> "VentanaPrincipal" [style=dashed, arrowhead=vee, label=" «create» ", fontcolor="#6a7682"];
+  "VentanaPrincipal" -> "PanelInicio" [style=dashed, arrowhead=vee, label=" «create» ", fontcolor="#6a7682"];
+  "VentanaPrincipal" -> "PanelPreparacion" [style=dashed, arrowhead=vee, label=" «create» ", fontcolor="#6a7682"];
+  "VentanaPrincipal" -> "PanelJuego" [style=dashed, arrowhead=vee, label=" «create» ", fontcolor="#6a7682"];
+  "PanelInicio" -> "HiloCargaJugadores" [style=dashed, arrowhead=vee, label=" «create» ", fontcolor="#6a7682"];
+  "PanelInicio" -> "TareaGuardarJugador" [style=dashed, arrowhead=vee, label=" «create» ", fontcolor="#6a7682"];
+  "Partida" -> "CasillaYaAtacadaException" [style=dashed, arrowhead=vee, label=" «throws» ", fontcolor="#6a7682"];
+  "ArchivoJugadores" -> "JugadorExistenteException" [style=dashed, arrowhead=vee, label=" «throws» ", fontcolor="#6a7682"];
+  "ElementoMarino" -> "Resultado" [style=dashed, arrowhead=vee, label=" «create» ", fontcolor="#6a7682"];
+  "Tablero" -> "Coordenada" [style=dashed, arrowhead=vee, label=" «use» ", fontcolor="#6a7682"];
+}

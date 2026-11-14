@@ -28,7 +28,7 @@ paradigma-grupo5/
 └── TPO/
     ├── DOCUMENTO_TECNICO.md              este documento
     ├── Manual_Batalla_Naval_con_Trampolines.docx
-    ├── diagramas/                        imágenes (.png) y fuentes Mermaid (.mmd)
+    ├── diagramas/                        imágenes (.svg y .png); fuentes en Graphviz (.dot) y Mermaid (.mmd)
     └── BATALLA_NAVAL/
         ├── Main.java                     punto de entrada: abre la ventana
         ├── INTERFAZ/                     Swing y los hilos que usa la pantalla de inicio
@@ -63,11 +63,39 @@ Para correrlo: abrir la carpeta `paradigma-grupo5` en el editor y ejecutar `TPO/
 
 ## 2. Diagrama de clases
 
-![Diagrama de clases](diagramas/clases.png)
+El diagrama está dividido en tres partes para que se pueda leer en pantalla. Al final está el diagrama completo en una sola imagen.
 
-Fuente: [`diagramas/clases.mmd`](diagramas/clases.mmd).
+### 2.1 Vista general
 
-Rombo lleno = composición (la parte no existe sin el todo). Rombo vacío = agregación. Triángulo con línea llena = herencia. Triángulo con línea punteada = implementa una interfaz. Flecha punteada = dependencia (crea, usa, lanza). `$` = `static`, `*` = abstracto, `#` = `protected`, `~` = default (sin modificador). `Consola` no aparece porque ya no la usa ninguna clase.
+![Vista general: clases, paquetes y relaciones](diagramas/clases_general.svg)
+
+Todas las clases con sus paquetes y relaciones, sin atributos ni métodos. Las referencias "de vuelta" (los paneles que guardan la ventana y los hilos que guardan el panel) se ven en el diagrama 2.3.
+
+### 2.2 Lógica del juego
+
+![Lógica del juego: paquetes CLASES, ELEMENTOS_MARINOS y TDAs](diagramas/clases_modelo.svg)
+
+Paquetes `CLASES`, `ELEMENTOS_MARINOS` y `TDAs`, con atributos y métodos.
+
+### 2.3 Interfaz gráfica, archivo e hilos
+
+![Interfaz gráfica, archivo e hilos](diagramas/clases_interfaz.svg)
+
+Paquete `INTERFAZ`, `Main`, `ArchivoJugadores` y su excepción. `Partida` y `Jugador` aparecen sin detalle porque ya están en el diagrama 2.2.
+
+### 2.4 Diagrama completo
+
+Todas las clases con atributos y métodos en una sola imagen: [`clases_completo.svg`](diagramas/clases_completo.svg) (también en [PNG](diagramas/clases_completo.png)). Conviene abrirlo y hacer zoom.
+
+### Cómo leer los diagramas
+
+- **Cada caja** tiene tres partes: el nombre arriba, los atributos al medio y los métodos abajo. Una clase abstracta tiene el nombre en cursiva y `{abstract}`; una interfaz dice `«interface»`.
+- **Visibilidad:** `+` public, `-` private, `#` protected, `~` default (sin modificador). Subrayado = `static`. Cursiva = método abstracto.
+- **Flechas:** rombo lleno = composición (la parte no existe sin el todo); rombo vacío = agregación; triángulo vacío con línea llena = herencia; triángulo vacío con línea punteada = implementa una interfaz; flecha simple = asociación (una clase guarda una referencia a otra); flecha punteada = dependencia (`«create»`, `«use»`, `«throws»`).
+- **Números azules:** la multiplicidad de cada extremo (por ejemplo, 1 `Tablero` tiene 100 `Casilla`).
+- **Cajas grises:** clases de Java (`JFrame`, `JPanel`, `Thread`, `Runnable`, `Exception`, `Comparable`). `Consola` no aparece porque ya no la usa ninguna clase.
+
+Fuentes: [`diagramas/fuentes`](diagramas/fuentes), en formato Graphviz (`.dot`).
 
 ## 3. Diagramas de secuencia
 
