@@ -20,6 +20,8 @@ import TPO.BATALLA_NAVAL.CLASES.Resultado;
 
 public class PanelJuego extends JPanel {
 
+    private VentanaPrincipal ventana;
+
     private Partida partida;
 
     private JLabel etiquetaTurno;
@@ -31,7 +33,9 @@ public class PanelJuego extends JPanel {
 
     private String resumenUltimoTurno;
 
-    public PanelJuego(Jugador jugador1, Jugador jugador2) {
+    public PanelJuego(VentanaPrincipal ventana, Jugador jugador1, Jugador jugador2) {
+
+        this.ventana = ventana;
 
         partida = new Partida(jugador1,jugador2);
 
@@ -312,10 +316,14 @@ public class PanelJuego extends JPanel {
             );
 
             etiquetaTurno.setText(
-                    "Partida finalizada"
+                    "Partida finalizada. Ganador: " + ganador.getNombre()
             );
 
+            actualizarBotoneraRival();   // Muestra tambien el ultimo disparo, el que termino la partida
+
             desactivarDisparos();
+
+            mostrarBotonVolver();
 
         } catch (
                 IllegalStateException e) {
@@ -325,6 +333,19 @@ public class PanelJuego extends JPanel {
                     e.getMessage()
             );
         }
+    }
+
+    private void mostrarBotonVolver() {
+
+        JButton botonVolver = new JButton("Volver al menu principal");
+
+        botonVolver.addActionListener(e -> ventana.volverAlInicio());
+
+        remove(etiquetaResultado);              // En la zona de abajo va el boton en lugar de la etiqueta
+        add(botonVolver, BorderLayout.SOUTH);
+
+        revalidate();
+        repaint();
     }
 
     private void desactivarDisparos() {
