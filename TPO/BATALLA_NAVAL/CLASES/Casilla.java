@@ -27,6 +27,8 @@ public class Casilla {
 
     public Resultado recibirBomba() {
         recibioBomba = true;
+        // GRASP - Polimorfismo: la casilla no pregunta si tiene agua, un barco o un trampolin.
+        // Le pide al elemento que reciba la bomba y cada subclase de ElementoMarino responde a su manera.
         return elemento.recibirBomba();
     }
 

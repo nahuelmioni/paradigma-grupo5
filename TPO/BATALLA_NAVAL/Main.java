@@ -1,165 +1,18 @@
 package TPO.BATALLA_NAVAL;
+
 import javax.swing.SwingUtilities;
-import TPO.BATALLA_NAVAL.INTERFAZ.VentanaPrincipal; 
-import TPO.BATALLA_NAVAL.CLASES.*;
-import TPO.BATALLA_NAVAL.CLASES.ELEMENTOS_MARINOS.*;
 
+import TPO.BATALLA_NAVAL.INTERFAZ.VentanaPrincipal;
 
-class Main {  //Default
+class Main {  // Modificador default: la clase solo es visible dentro del paquete TPO.BATALLA_NAVAL
 
     public static void main(String[] args) {
 
-         SwingUtilities.invokeLater(() -> {
+        // La ventana se crea dentro del hilo de Swing (Event Dispatch Thread), como pide Swing.
+        SwingUtilities.invokeLater(() -> {
 
             VentanaPrincipal ventana = new VentanaPrincipal();
             ventana.setVisible(true);
-
         });
-
-        Consola consola = new Consola();
-
-        String nombre1 = consola.pedirTexto("Nombre del jugador 1: ");
-        String nombre2 = consola.pedirTexto("Nombre del jugador 2: ");
-
-        Jugador jugador1 = new Jugador(nombre1);
-        Jugador jugador2 = new Jugador(nombre2);
-
-        consola.mostrar("\nPreparacion de " + jugador1.getNombre());
-        prepararJugador(consola, jugador1);
-
-        consola.esperarEnter();
-        consola.limpiarPantalla();
-
-        consola.mostrar("\nPreparacion de " + jugador2.getNombre());
-        prepararJugador(consola, jugador2);
-
-        consola.esperarEnter();
-        consola.limpiarPantalla();
-
-        Partida partida = new Partida(jugador1, jugador2);
-
-        while (!partida.termino()) {
-
-            Jugador actual = partida.getJugadorActual();
-            Jugador rival = partida.getRivalActual();
-
-            consola.mostrar("Turno de " + actual.getNombre());
-
-            consola.mostrarLadoALado(
-                    actual.getTablero().dibujar(true),
-                    rival.getTablero().dibujar(false)
-            );
-
-            consola.mostrarFlota(actual.getTablero().getBarcosOrdenados());
-
-            Resultado resultado = null;
-            boolean disparoValido = false;
-
-            while (!disparoValido) {
-
-                Coordenada disparo = consola.pedirCoordenada("¿Donde tiras la bomba? ");
-
-                try {
-                    resultado = partida.disparar(disparo);
-                    disparoValido = true;
-
-                } catch (CasillaYaAtacadaException e) {
-
-                    consola.mostrar(e.getMessage());
-                } finally {
-                    consola.mostrar("Intento de disparo finalizado");
-                }
-            }
-            consola.mostrar("Resultado: " + resultado);
-
-            if (partida.termino()) {
-                break;
-            }
-
-            consola.esperarEnter();
-            consola.limpiarPantalla();
-
-            partida.cambiarTurno();
-        }
-        try {
-            consola.mostrar("Ganador: " + partida.getGanador().getNombre());
-        } catch (IllegalStateException e){
-            consola.mostrar(e.getMessage());
-
-        }
-    }
-
-
-    private static void prepararJugador(Consola consola, Jugador jugador) {
-
-        Tablero tablero = jugador.getTablero();
-
-        colocarBarco(
-                consola,
-                tablero,
-                new Barco("Lancha 1", 2)
-        );
-
-        colocarBarco(
-                consola,
-                tablero,
-                new Barco("Lancha 2", 2)
-        );
-
-        colocarBarco(
-                consola,
-                tablero,
-                new Barco("Fragata", 3)
-        );
-
-        colocarBarco(
-                consola,
-                tablero,
-                new Barco("Acorazado", 4)
-        );
-
-        for (int i = 1; i <= 4; i++) {  //Ya colocados los barcos, se pasa a colocar los trampolines
-
-            boolean colocado = false;
-
-            while (!colocado) {
-
-                consola.mostrar(tablero.dibujar(true));
-
-                Coordenada coordenada = consola.pedirCoordenada("Posicion del trampolin " + i + ": ");
-
-                colocado = tablero.colocarTrampolin(coordenada);
-
-                if (!colocado) {
-                    consola.mostrar("Esa casilla ya esta ocupada.");
-                }
-            }
-        }
-    }
-
-
-    private static void colocarBarco(Consola consola, Tablero tablero, Barco barco) {
-
-        boolean colocado = false;
-
-        while (!colocado) {
-
-            consola.mostrar(tablero.dibujar(true));
-
-            consola.mostrar("Colocando " + barco.getNombre() + " (largo " + barco.getLargo() + ")");
-
-            Coordenada inicio = consola.pedirCoordenada("Casilla inicial: ");
-
-            boolean horizontal = consola.pedirOrientacion();
-
-            colocado = tablero.colocarBarco(
-                            barco,
-                            inicio,
-                            horizontal
-                        );
-
-            if (!colocado) {consola.mostrar("No se puede colocar el barco ahi.");
-            }
-        }
     }
 }

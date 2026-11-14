@@ -1,0 +1,52 @@
+sequenceDiagram
+    autonumber
+    actor U as Jugador (usuario)
+    participant PJ as :PanelJuego
+    participant P as :Partida
+    participant TR as tableroRival :Tablero
+    participant C as :Casilla
+    participant E as elemento :ElementoMarino
+    participant TD as destino :Tablero
+
+    U->>PJ: click en el botón (fila, columna)
+    PJ->>P: disparar(coordenada)
+    P->>TR: yaRecibioBomba(coordenada)
+    TR-->>P: boolean
+
+    alt la casilla ya recibió una bomba
+        P--)PJ: throw CasillaYaAtacadaException
+        PJ->>U: JOptionPane con e.getMessage()
+    else casilla nueva
+        P->>TR: recibirBomba(coordenada)
+        TR->>C: recibirBomba()
+        C->>E: recibirBomba()
+        Note right of E: Polimorfismo: responde Agua, Barco o Trampolin
+        E-->>C: Resultado
+        C-->>TR: Resultado
+        TR-->>P: Resultado
+
+        opt resultado es TRAMPOLIN
+            P->>P: rebotar(tirador, rival)
+            loop mientras caiga en un trampolín y la partida no termine
+                P->>P: generarCoordenadaAleatoria(destino.getTablero())
+                P->>TD: recibirBomba(coordenadaAleatoria)
+                TD-->>P: Resultado
+                Note over P,TD: Si vuelve a ser TRAMPOLIN se intercambian destino y otroTablero
+            end
+        end
+
+        P-->>PJ: Resultado
+        PJ->>PJ: actualizarTableros()
+        PJ->>U: JOptionPane "Resultado: ..."
+        PJ->>P: termino()
+        P-->>PJ: boolean
+
+        alt la partida terminó
+            PJ->>P: getGanador()
+            P-->>PJ: Jugador
+            PJ->>U: JOptionPane "Ganador: ..."
+        else sigue la partida
+            PJ->>P: cambiarTurno()
+            PJ->>PJ: mostrarPantallaEspera()
+        end
+    end
