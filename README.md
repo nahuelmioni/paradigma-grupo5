@@ -68,8 +68,8 @@ Los ejercicios se suben en una carpeta por clase (clase-01, clase-02, etc.). El 
 
 📅 Fecha: 19/10 💻 Actividad: TPO - Primera version del codigo del juego: clases del modelo, clase abstracta ElementoMarino e interfaz del TDA Flota. ✅ Entrega: -
 
-📅 Fecha: 26/10 💻 Actividad: TPO - Interfaz grafica con Swing (pantallas de inicio, preparacion y juego) y resumen del turno anterior. ✅ Entrega: -
+📅 Fecha: 02/11 💻 Actividad: TPO - Interfaz grafica con Swing (pantallas de inicio, preparacion y juego) y resumen del turno anterior. ✅ Entrega: -
 
-📅 Fecha: 14/11 💻 Actividad: TPO - Jugadores guardados en archivo usando hilos, vuelta al menu al terminar la partida y diagramas UML actualizados. ✅ Entrega: -
+📅 Fecha: 07/11 💻 Actividad: TPO - Jugadores guardados en archivo usando hilos, vuelta al menu al terminar la partida y diagramas UML actualizados. ✅ Entrega: -
 
 📅 Fecha: 15/11 💻 Actividad: TPO - Entrega final: codigo, manual, documento tecnico, diagrama de clases y diagramas de secuencia. ✅ Entrega: 15/11
