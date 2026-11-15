@@ -106,11 +106,15 @@ Se entregan un diagrama de clases y dos diagramas de secuencia, en la carpeta [`
 
 | Diagrama | Archivo | Qué muestra |
 | --- | --- | --- |
-| Clases | [`diagrama_clases_entrega.drawio`](diagramas/diagrama_clases_entrega.drawio) | Paquetes `CLASES`, `ELEMENTOS_MARINOS` e `INTERFAZ` con atributos, métodos y relaciones. Para que se lea mejor no incluye el TDA Flota ni los hilos, que se explican en las secciones 3 a 5 |
+| Clases | [`diagrama_clases.png`](diagramas/diagrama_clases.png) (hecho en draw.io; el PNG incluye el diagrama editable) | Paquetes `CLASES`, `ELEMENTOS_MARINOS` e `INTERFAZ` con atributos, métodos y relaciones. Para que se lea mejor no incluye el TDA Flota ni los hilos, que se explican en las secciones 3 a 5 |
 | Secuencia: disparo | [`secuencia_disparo.png`](diagramas/secuencia_disparo.png) | Un disparo desde el clic hasta el resultado: la excepción por casilla repetida, el polimorfismo de `recibirBomba()` y la cadena de rebotes |
 | Secuencia: crear jugador | [`secuencia_crear_jugador.png`](diagramas/secuencia_crear_jugador.png) | El guardado de un jugador nuevo en un hilo aparte y la vuelta a la pantalla con `invokeLater` |
 
 **Notación del diagrama de clases:** `+` público, `-` privado, `#` protegido, `~` default; subrayado = `static`; cursiva = abstracto. Triángulo vacío = herencia (punteado si es una interfaz); rombo lleno = composición; rombo vacío = agregación; flecha simple = asociación; flecha punteada = dependencia (`«create»`, `«use»`, `«throws»`).
+
+### Clases
+
+![Diagrama de clases](diagramas/diagrama_clases.png)
 
 ### Secuencia: disparo
 
