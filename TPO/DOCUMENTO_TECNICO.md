@@ -1,208 +1,121 @@
-# Batalla Naval con Trampolines — Documento técnico
+# Documentación técnica – Batalla Naval con Trampolines
 
-Paradigma Orientado a Objetos · UADE · 2.º cuatrimestre 2026
+Paradigma Orientado a Objetos · UADE · 2.º cuatrimestre 2026 · Grupo 5
 
-Este documento explica cómo está armado el juego: qué clases hay, cómo se conectan y dónde se aplican los temas pedidos en la guía del TP. Las reglas para jugar están en el manual, en esta misma carpeta ([`Manual_Batalla_Naval_con_Trampolines.docx`](Manual_Batalla_Naval_con_Trampolines.docx)).
+## 1. Introducción
 
-- **Lenguaje:** Java, con interfaz gráfica Swing.
-- **Idea central:** cada casilla guarda un `ElementoMarino` (agua, barco o trampolín) y cada uno responde a la bomba a su manera. Así el tablero nunca tiene que preguntar qué hay en una casilla.
-- **Jugadores guardados:** al abrir el juego se elige un jugador de los ya guardados o se crea uno nuevo. Los nombres quedan en el archivo `jugadores.txt`, y el archivo se lee y se escribe en hilos separados para no congelar la ventana.
+Batalla Naval con Trampolines es un juego para dos jugadores en la misma computadora, hecho en Java con interfaz gráfica Swing. Cada jugador coloca en un tablero de 10 x 10 cuatro barcos (dos Lanchas de largo 2, una Fragata de 3 y un Acorazado de 4) y cuatro trampolines.
 
-## Índice
+Por turnos, cada jugador dispara al tablero rival. Si la bomba cae en un trampolín, rebota a una casilla al azar, sin bomba, del tablero de quien disparó; si ahí hay otro trampolín, vuelve a rebotar al otro tablero. Gana quien hunde primero toda la flota rival.
 
-1. [Estructura del repositorio](#1-estructura-del-repositorio)
-2. [Diagrama de clases](#2-diagrama-de-clases)
-3. [Diagramas de secuencia](#3-diagramas-de-secuencia)
-4. [Patrón GRASP y principio SOLID](#4-patrón-grasp-y-principio-solid)
-5. [Archivos, hilos y destructores](#5-archivos-hilos-y-destructores)
+**Ejecución:** abrir la carpeta del proyecto en el IDE y ejecutar `TPO/BATALLA_NAVAL/Main.java` (JDK 8 o superior). Al iniciar se eligen dos jugadores guardados o se crean nuevos; los nombres quedan en `jugadores.txt`, en la carpeta desde la que se ejecuta el juego.
 
----
+## 2. Diseño general
 
-## 1. Estructura del repositorio
+El código separa la lógica del juego (modelo) de las pantallas (vista). Las pantallas nunca deciden reglas: le preguntan a `Partida` y a `Tablero` qué pasó, de quién es el turno y si terminó la partida, y solo muestran la respuesta.
 
-```text
-paradigma-grupo5/
-├── README.md
-├── .gitignore
-├── clase-02/ … clase-04/                 ejercicios de cada clase
-└── TPO/
-    ├── DOCUMENTO_TECNICO.md              este documento
-    ├── Manual_Batalla_Naval_con_Trampolines.docx
-    ├── diagramas/                        imágenes (.svg y .png); fuentes en Graphviz (.dot) y Mermaid (.mmd)
-    └── BATALLA_NAVAL/
-        ├── Main.java                     punto de entrada: abre la ventana
-        ├── INTERFAZ/                     Swing y los hilos que usa la pantalla de inicio
-        │   ├── VentanaPrincipal.java
-        │   ├── PanelInicio.java
-        │   ├── PanelPreparacion.java
-        │   ├── PanelJuego.java
-        │   ├── HiloCargaJugadores.java
-        │   └── TareaGuardarJugador.java
-        ├── CLASES/                       lógica del juego
-        │   ├── Partida.java
-        │   ├── Jugador.java
-        │   ├── Tablero.java
-        │   ├── Casilla.java
-        │   ├── Coordenada.java
-        │   ├── Resultado.java
-        │   ├── ArchivoJugadores.java
-        │   ├── CasillaYaAtacadaException.java
-        │   ├── JugadorExistenteException.java
-        │   └── Consola.java              de la versión por consola; ya no se usa
-        ├── ELEMENTOS_MARINOS/
-        │   ├── ElementoMarino.java
-        │   ├── Agua.java
-        │   ├── Barco.java
-        │   └── Trampolin.java
-        └── TDAs/
-            ├── FlotaInterfaz.java
-            └── FlotaImp.java
-```
+| Paquete | Contenido | Rol |
+| --- | --- | --- |
+| `CLASES` | `Partida`, `Jugador`, `Tablero`, `Casilla`, `Coordenada`, `Resultado`, `ArchivoJugadores` y las excepciones propias | Reglas del juego y persistencia |
+| `CLASES.ELEMENTOS_MARINOS` | `ElementoMarino` y sus hijas `Agua`, `Barco`, `Trampolin` | Lo que puede haber en una casilla |
+| `TDAs` | `FlotaInterfaz` y `FlotaImp` | TDA Flota: los barcos de un jugador |
+| `INTERFAZ` | `VentanaPrincipal`, `PanelInicio`, `PanelPreparacion`, `PanelJuego` y los dos hilos | Pantallas Swing y tareas en segundo plano |
 
-Para correrlo: abrir la carpeta `paradigma-grupo5` en el editor y ejecutar `TPO/BATALLA_NAVAL/Main.java`. El archivo `jugadores.txt` se crea en la carpeta desde la que se ejecuta el juego (en VS Code, la carpeta abierta). Está en el `.gitignore` para que cada uno tenga sus propios jugadores.
+Hay una sola ventana (`VentanaPrincipal`, que hereda de `JFrame`). Lo que cambia es el panel que muestra, en este orden:
 
-## 2. Diagrama de clases
+1. `PanelInicio`: elegir o crear los dos jugadores.
+2. `PanelPreparacion`: cada jugador coloca sus barcos y trampolines, con una pantalla de espera entre uno y otro.
+3. `PanelJuego`: turnos de disparo, con una pantalla de espera entre turnos para que el rival no vea el tablero ajeno.
+4. Al terminar, `PanelJuego` muestra el ganador y un botón que vuelve a `PanelInicio` (`VentanaPrincipal.volverAlInicio()`).
 
-El diagrama está dividido en tres partes para que se pueda leer en pantalla. Al final está el diagrama completo en una sola imagen.
+## 3. Clases y responsabilidades
 
-### 2.1 Vista general
+Cada clase tiene una responsabilidad clara; las del modelo no conocen a las pantallas.
 
-![Vista general: clases, paquetes y relaciones](diagramas/clases_general.svg)
+| Clase | Responsabilidad |
+| --- | --- |
+| `Partida` | Reglas: turno actual, disparo, rebote en trampolines, fin de la partida y ganador |
+| `Jugador` | Nombre y tablero de cada jugador; sabe si perdió |
+| `Tablero` | Matriz de 10 x 10 casillas y la flota; coloca barcos y trampolines, recibe bombas y se dibuja como texto |
+| `Casilla` | Guarda un elemento y si ya recibió una bomba; le delega la bomba al elemento |
+| `ElementoMarino` | Clase abstracta: define `recibirBomba()` y `getSimbolo()` |
+| `Agua`, `Barco`, `Trampolin` | Cada una responde a la bomba a su manera (agua, tocado/hundido, rebote) |
+| `Coordenada` | Fila y columna de una casilla; se muestra como "B5" |
+| `Resultado` | Respuesta de un disparo: agua, tocado, hundido o trampolín |
+| `FlotaInterfaz` / `FlotaImp` | TDA Flota: agrega barcos, controla el máximo de 4 y sabe si está hundida |
+| `ArchivoJugadores` | Lee y escribe `jugadores.txt` |
+| `CasillaYaAtacadaException`, `JugadorExistenteException` | Excepciones propias del juego |
+| `VentanaPrincipal` | Ventana única; cambia de pantalla |
+| `PanelInicio` | Menú: elegir y crear jugadores |
+| `PanelPreparacion` | Colocar barcos y trampolines |
+| `PanelJuego` | Turnos de disparo, resultado y final de la partida |
+| `HiloCargaJugadores`, `TareaGuardarJugador` | Leer y guardar jugadores en un hilo aparte |
 
-Todas las clases con sus paquetes y relaciones, sin atributos ni métodos. Las referencias "de vuelta" (los paneles que guardan la ventana y los hilos que guardan el panel) se ven en el diagrama 2.3.
+`Consola` queda de la primera versión por consola y no la usa ninguna clase.
 
-### 2.2 Lógica del juego
+## 4. Dónde se aplica cada concepto
 
-![Lógica del juego: paquetes CLASES, ELEMENTOS_MARINOS y TDAs](diagramas/clases_modelo.svg)
+La tabla indica la clase y el método donde aparece cada concepto de la materia.
 
-Paquetes `CLASES`, `ELEMENTOS_MARINOS` y `TDAs`, con atributos y métodos.
+| Concepto | Dónde se aplica |
+| --- | --- |
+| Clases y objetos | Los objetos se crean con `new`: `PanelInicio.comenzarPartida()` crea los dos `Jugador`, y cada `Jugador` crea su `Tablero` |
+| Encapsulamiento | Todos los atributos son `private` y se leen con getters (`Jugador.getNombre()`, `Coordenada.getFila()`, `Resultado.getTipo()`) |
+| Constructores y sobrecarga de constructores | `Coordenada(int, int)` y `Coordenada(char, int)`, que llama al primero con `this(...)`; `ArchivoJugadores()` llama a `this(ARCHIVO_POR_DEFECTO)` |
+| Sobrecarga de métodos | `Partida.disparar(Coordenada)` y `Partida.disparar(int, int)` |
+| Herencia | `Agua`, `Barco` y `Trampolin` heredan de `ElementoMarino`; los paneles heredan de `JPanel`, `VentanaPrincipal` de `JFrame` y las excepciones propias de `Exception` |
+| Clase abstracta | `ElementoMarino`: constructor `protected` y métodos abstractos `recibirBomba()` y `getSimbolo()` |
+| Sobreescritura (`@Override`) | `recibirBomba()` y `getSimbolo()` en cada elemento; `toString()` en `Resultado` y `Coordenada`; `compareTo()` en `Barco`; `run()` en los hilos |
+| Polimorfismo | `Casilla.recibirBomba()` y `Casilla.getSimbolo()` llaman al método del elemento sin saber si es agua, barco o trampolín |
+| Interfaces | `FlotaInterfaz` (implementada por `FlotaImp`), `Comparable<Barco>` (en `Barco`) y `Runnable` (en `TareaGuardarJugador`) |
+| TDA | Flota: `FlotaInterfaz` es el contrato y `FlotaImp` la implementación con un `ArrayList<Barco>` |
+| Relaciones entre clases | Composición: `Jugador` tiene un `Tablero`, y `Tablero` tiene sus `Casilla` y su `FlotaImp`. Agregación: `Partida` usa dos `Jugador` que vienen de afuera |
+| Miembros `static` y constantes | `Tablero.TAMANIO`, `Resultado.AGUA` / `TOCADO` / `HUNDIDO` / `TRAMPOLIN`, `ArchivoJugadores.ARCHIVO_POR_DEFECTO`, `Coordenada.desdeTexto()`, `Main.main()` |
+| Modificadores de acceso | `private` en atributos; `public` en lo que usan otras clases; `protected` en el constructor de `ElementoMarino`; default en la clase `Main` y en los métodos de `PanelInicio` que llaman los hilos |
+| Arrays y matrices | `Casilla[10][10]` en `Tablero`; `JButton[10][10]` en los paneles; arrays `nombresBarcos` y `largosBarcos` en `PanelPreparacion` |
+| Colecciones y genéricos | `ArrayList<Barco>` en `FlotaImp`; `ArrayList<String>` en `ArchivoJugadores`; `JComboBox<String>` en `PanelInicio` |
+| Ordenamiento | `Barco.compareTo()` ordena por largo; `FlotaImp.getBarcosOrdenados()` usa `Collections.sort` |
+| Estructuras de control | `for` anidados en `Tablero`; `while` en `Partida.rebotar()` y en `ArchivoJugadores.leerJugadores()`; `do-while` en `Partida.generarCoordenadaAleatoria()`; `switch` en `Resultado.toString()` |
+| Excepciones | Propias (checked): `CasillaYaAtacadaException` y `JugadorExistenteException`. De Java: `IllegalArgumentException` (`Barco`), `IllegalStateException` (`FlotaImp`, `Partida.getGanador()`), `IOException` (archivo). Se usan `throw`, `throws`, `try` / `catch` / `finally` |
+| Archivos | `ArchivoJugadores`: lectura y escritura de `jugadores.txt` con try-with-resources |
+| Hilos | `HiloCargaJugadores` (hereda de `Thread`) y `TareaGuardarJugador` (implementa `Runnable`); `SwingUtilities.invokeLater`; métodos `synchronized` en `ArchivoJugadores` |
+| Interfaz gráfica | Swing: `JFrame`, `JPanel`, `BorderLayout`, `GridLayout`, `GridBagLayout`, botones con eventos escritos como lambdas |
+| GRASP – Polimorfismo | `ElementoMarino` y sus hijas, usadas en `Casilla.recibirBomba()` (marcado con un comentario en el código) |
+| SOLID – Responsabilidad única | `ArchivoJugadores` solo maneja el archivo: la ventana no sabe nada del archivo, y el archivo no sabe nada de la ventana |
 
-### 2.3 Interfaz gráfica, archivo e hilos
+## 5. Archivos, excepciones e hilos
 
-![Interfaz gráfica, archivo e hilos](diagramas/clases_interfaz.svg)
+**Archivo.** `ArchivoJugadores` guarda un nombre por línea en `jugadores.txt` (UTF-8). `leerJugadores()` devuelve la lista, o una lista vacía si el archivo todavía no existe. `agregarJugador()` escribe al final del archivo y lanza `JugadorExistenteException` si el nombre ya estaba, sin importar mayúsculas.
 
-Paquete `INTERFAZ`, `Main`, `ArchivoJugadores` y su excepción. `Partida` y `Jugador` aparecen sin detalle porque ya están en el diagrama 2.2.
+**Destructores.** Java no tiene destructores: la memoria la libera el recolector de basura cuando un objeto queda sin referencias (por ejemplo, el panel anterior al cambiar de pantalla). Los recursos externos sí se cierran, con try-with-resources: el lector y el escritor del archivo se cierran solos aunque ocurra una excepción.
 
-### 2.4 Diagrama completo
+**Excepciones.** `Partida.disparar()` lanza `CasillaYaAtacadaException` si se repite una casilla; `PanelJuego.disparar()` la atrapa, muestra el mensaje y no se pierde el turno. `JugadorExistenteException` e `IOException` se atrapan en los hilos, que le piden a la pantalla que muestre el error.
 
-Todas las clases con atributos y métodos en una sola imagen: [`clases_completo.svg`](diagramas/clases_completo.svg) (también en [PNG](diagramas/clases_completo.png)). Conviene abrirlo y hacer zoom.
+**Hilos.** Swing dibuja y atiende los clics en un único hilo; si ese hilo esperara al disco, la ventana se congelaría. Por eso el archivo se usa en hilos aparte, iniciados con `start()`:
 
-### Cómo leer los diagramas
+| Clase | Forma | Cuándo |
+| --- | --- | --- |
+| `HiloCargaJugadores` | Hereda de `Thread` | Al abrir el menú, lee los jugadores guardados |
+| `TareaGuardarJugador` | Implementa `Runnable` y se pasa a `new Thread(...)` | Al crear un jugador, lo guarda |
 
-- **Cada caja** tiene tres partes: el nombre arriba, los atributos al medio y los métodos abajo. Una clase abstracta tiene el nombre en cursiva y `{abstract}`; una interfaz dice `«interface»`.
-- **Visibilidad:** `+` public, `-` private, `#` protected, `~` default (sin modificador). Subrayado = `static`. Cursiva = método abstracto.
-- **Flechas:** rombo lleno = composición (la parte no existe sin el todo); rombo vacío = agregación; triángulo vacío con línea llena = herencia; triángulo vacío con línea punteada = implementa una interfaz; flecha simple = asociación (una clase guarda una referencia a otra); flecha punteada = dependencia (`«create»`, `«use»`, `«throws»`).
-- **Números azules:** la multiplicidad de cada extremo (por ejemplo, 1 `Tablero` tiene 100 `Casilla`).
-- **Cajas grises:** clases de Java (`JFrame`, `JPanel`, `Thread`, `Runnable`, `Exception`, `Comparable`). `Consola` no aparece porque ya no la usa ninguna clase.
+Los hilos no tocan la ventana directamente: usan `SwingUtilities.invokeLater`. Su `finally` vuelve a habilitar los botones pase lo que pase, y los métodos `synchronized` de `ArchivoJugadores` evitan que dos hilos escriban a la vez.
 
-Fuentes: [`diagramas/fuentes`](diagramas/fuentes), en formato Graphviz (`.dot`).
+## 6. Diagramas UML
 
-## 3. Diagramas de secuencia
+Se entregan un diagrama de clases y dos diagramas de secuencia, en la carpeta [`diagramas`](diagramas).
 
-### 3.1 Disparo con rebote en cadena
+| Diagrama | Archivo | Qué muestra |
+| --- | --- | --- |
+| Clases | [`diagrama_clases_entrega.drawio`](diagramas/diagrama_clases_entrega.drawio) | Paquetes `CLASES`, `ELEMENTOS_MARINOS` e `INTERFAZ` con atributos, métodos y relaciones. Para que se lea mejor no incluye el TDA Flota ni los hilos, que se explican en las secciones 3 a 5 |
+| Secuencia: disparo | [`secuencia_disparo.png`](diagramas/secuencia_disparo.png) | Un disparo desde el clic hasta el resultado: la excepción por casilla repetida, el polimorfismo de `recibirBomba()` y la cadena de rebotes |
+| Secuencia: crear jugador | [`secuencia_crear_jugador.png`](diagramas/secuencia_crear_jugador.png) | El guardado de un jugador nuevo en un hilo aparte y la vuelta a la pantalla con `invokeLater` |
 
-El jugador hace clic en una casilla del tablero rival. Si cae en un trampolín, la bomba rebota a una casilla al azar del tablero del que tiró; si ahí hay otro trampolín, vuelve al tablero rival, y así hasta que caiga en algo que no sea un trampolín.
+**Notación del diagrama de clases:** `+` público, `-` privado, `#` protegido, `~` default; subrayado = `static`; cursiva = abstracto. Triángulo vacío = herencia (punteado si es una interfaz); rombo lleno = composición; rombo vacío = agregación; flecha simple = asociación; flecha punteada = dependencia (`«create»`, `«use»`, `«throws»`).
+
+### Secuencia: disparo
 
 ![Diagrama de secuencia del disparo](diagramas/secuencia_disparo.png)
 
-Fuente: [`diagramas/secuencia_disparo.mmd`](diagramas/secuencia_disparo.mmd).
-
-- El **alt** de arriba es la excepción propia `CasillaYaAtacadaException`: si ya se tiró en esa casilla, no se pierde el turno.
-- En `elemento.recibirBomba()` está el polimorfismo (ver sección 4).
-- El **loop** es la cadena de rebotes de `Partida.rebotar`.
-
-### 3.2 Crear un jugador en un hilo separado
+### Secuencia: crear jugador
 
 ![Diagrama de secuencia de crear jugador](diagramas/secuencia_crear_jugador.png)
-
-Fuente: [`diagramas/secuencia_crear_jugador.mmd`](diagramas/secuencia_crear_jugador.mmd).
-
-- `PanelInicio` crea el hilo y llama a `start()`. Desde ahí, el guardado corre en paralelo y la ventana sigue respondiendo.
-- Cuando el hilo termina, no toca la ventana directamente: le pide al hilo de Swing que lo haga con `SwingUtilities.invokeLater`.
-- El `finally` garantiza que los botones se vuelvan a habilitar, haya salido bien o mal.
-
-## 4. Patrón GRASP y principio SOLID
-
-### GRASP — Polimorfismo
-
-**Qué dice:** cuando un comportamiento cambia según el tipo de objeto, se le asigna a cada tipo con un método polimórfico, en vez de preguntar el tipo con `if` o `switch`.
-
-**Dónde:** `ElementoMarino` (abstracta) y sus subclases `Agua`, `Barco` y `Trampolin`. Se usa en `Casilla.recibirBomba()` (está marcado con un comentario en el código):
-
-```java
-public Resultado recibirBomba() {
-    recibioBomba = true;
-    return elemento.recibirBomba();   // Agua, Barco o Trampolin: cada uno responde a su manera
-}
-```
-
-**Qué ganamos:** la casilla no sabe qué tiene adentro. Si mañana se agrega un elemento nuevo (por ejemplo, una mina), alcanza con crear otra subclase de `ElementoMarino`; `Casilla` y `Tablero` no se tocan.
-
-### SOLID — Principio de Responsabilidad Única (la "S")
-
-**Qué dice:** una clase debe tener un solo motivo para cambiar.
-
-**Dónde:** `ArchivoJugadores` (también marcado con un comentario en el código).
-
-**Cómo se ve:** cada clase de la pantalla de inicio hace una sola cosa:
-
-| Clase | Su única responsabilidad |
-| --- | --- |
-| `ArchivoJugadores` | Leer y escribir `jugadores.txt` |
-| `PanelInicio` | Mostrar la pantalla y atender los botones |
-| `HiloCargaJugadores` / `TareaGuardarJugador` | Hacer el trabajo con el archivo fuera del hilo de la ventana |
-
-`PanelInicio` no sabe nada del archivo, y `ArchivoJugadores` no sabe nada de la ventana. Si mañana se cambia el formato del archivo, o se guarda en otro lugar, solo cambia `ArchivoJugadores`.
-
-## 5. Archivos, hilos y destructores
-
-### Archivo
-
-`ArchivoJugadores` guarda un nombre por línea en `jugadores.txt` (UTF-8, para que funcionen tildes y eñes).
-
-| Método | Qué hace |
-| --- | --- |
-| `leerJugadores()` | Devuelve un `ArrayList<String>` con los nombres. Si el archivo todavía no existe, devuelve la lista vacía. |
-| `agregarJugador(nombre)` | Agrega el nombre al final del archivo (lo crea si no existe). Lanza `JugadorExistenteException` si ese nombre ya estaba, sin importar mayúsculas. |
-
-Los dos declaran `throws IOException`, porque leer o escribir el disco puede fallar.
-
-### Hilos
-
-Swing hace todo lo de la ventana (dibujar, atender clics) en un único hilo, el *Event Dispatch Thread*. Si ese hilo se queda esperando al disco, la ventana se congela. Por eso el archivo se lee y se escribe en hilos separados. Usamos las dos formas de definir un hilo en Java:
-
-| Forma | Clase | Cuándo se usa |
-| --- | --- | --- |
-| Heredar de `Thread` y sobreescribir `run()` | `HiloCargaJugadores` | Al abrir el juego, para leer los jugadores guardados |
-| Implementar `Runnable` y pasárselo a un `new Thread(...)` | `TareaGuardarJugador` | Al crear un jugador nuevo, para guardarlo |
-
-Detalles importantes:
-
-- El hilo se lanza con `start()`, que crea el hilo nuevo y ejecuta `run()` en él. Llamar a `run()` directamente lo ejecutaría en el mismo hilo, sin paralelismo.
-- Desde otro hilo no se toca la ventana: se usa `SwingUtilities.invokeLater(...)` para que lo haga el hilo de Swing.
-- Los métodos de `ArchivoJugadores` son `synchronized`: si dos hilos usan el archivo a la vez, uno espera a que termine el otro y no se mezclan las líneas.
-- Los métodos de `PanelInicio` que llaman los hilos (`mostrarJugadores`, `jugadorCreado`, `mostrarError`, `terminarCarga`, `terminarGuardado`) no tienen modificador: son *default*, visibles solo dentro del paquete `INTERFAZ`, que es donde están los hilos.
-
-### Destructores
-
-Java no tiene destructores explícitos como C++. La memoria la libera el **recolector de basura** (*garbage collector*) cuando un objeto deja de estar referenciado: por ejemplo, cuando la ventana pasa de `PanelInicio` a `PanelPreparacion`, el panel de inicio queda sin referencias y el recolector lo libera solo.
-
-Lo que sí hay que cerrar a mano son los recursos externos, como los archivos. Para eso `ArchivoJugadores` usa **try-with-resources**: el lector y el escritor se cierran solos al terminar el bloque, aunque ocurra una excepción.
-
-```java
-try (BufferedReader lector = Files.newBufferedReader(ruta, StandardCharsets.UTF_8)) {
-    // ... leer líneas ...
-}   // acá el lector se cierra solo
-```
-
-### Excepciones que se agregaron
-
-| Excepción | Tipo | Dónde se lanza | Dónde se atrapa |
-| --- | --- | --- | --- |
-| `JugadorExistenteException` | Propia (hereda de `Exception`) | `ArchivoJugadores.agregarJugador` | `TareaGuardarJugador.run` |
-| `IOException` | Común de Java | Lectura y escritura del archivo | `HiloCargaJugadores.run` y `TareaGuardarJugador.run` |
-| `IllegalArgumentException` | Común de Java | `agregarJugador` con nombre vacío | Nunca llega: `PanelInicio` valida antes |
-
-Los dos hilos usan `try` / `catch` / `finally`: el `finally` vuelve a habilitar los botones pase lo que pase.
-
----
