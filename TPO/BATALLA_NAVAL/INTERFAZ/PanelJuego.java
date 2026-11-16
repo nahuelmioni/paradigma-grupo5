@@ -22,18 +22,18 @@ public class PanelJuego extends JPanel {
 
     private VentanaPrincipal ventana;
 
-    private Partida partida;
+    private Partida partida;  //Objeto partida
 
-    private JLabel etiquetaTurno;
-    private JLabel etiquetaResultado;
+    private JLabel etiquetaTurno;  //Indica de quien es el turno
+    private JLabel etiquetaResultado;  //Arranca con esperando disparo
 
-    private JTextArea tableroPropio;
+    private JTextArea tableroPropio;  //Tablero propio dibujado con texto ASCII
 
     private JButton[][] botonesDisparo;
 
     private String resumenUltimoTurno;
 
-    public PanelJuego(VentanaPrincipal ventana, Jugador jugador1, Jugador jugador2) {
+    public PanelJuego(VentanaPrincipal ventana, Jugador jugador1, Jugador jugador2) {   //Constructor
 
         this.ventana = ventana;
 
@@ -48,13 +48,13 @@ public class PanelJuego extends JPanel {
 
         removeAll();
 
-        setLayout(new BorderLayout());
+        setLayout(new BorderLayout());  //Nuevo layout para la pantalla espera
 
         Jugador jugador = partida.getJugadorActual();
 
-        String textoMensaje = "<html><div style='text-align:center;'>";
+        String textoMensaje = "<html><div style='text-align:center;'>";  //HTML para que swing entienda el salto de linea (<br>) y la negrita (<b>...</b>)
 
-        if (resumenUltimoTurno != null) {
+        if (resumenUltimoTurno != null) {  //Si hubo un turno antes
 
                 textoMensaje = textoMensaje + "<br><br><b>Turno anterior:</b><br>" + resumenUltimoTurno.replace("\n", "<br>") + "<br><br>";
         }
@@ -62,9 +62,9 @@ public class PanelJuego extends JPanel {
         textoMensaje = textoMensaje + "<b>Turno de " + jugador.getNombre() + "</b><br>" + "Presiona cuando estes listo para continuar." + "</div></html>";
 
 
-        JLabel mensaje = new JLabel(textoMensaje,SwingConstants.CENTER);
+        JLabel mensaje = new JLabel(textoMensaje,SwingConstants.CENTER);  //Centramos el mensaje
 
-        JButton botonListo = new JButton("Estoy listo");
+        JButton botonListo = new JButton("Estoy listo");  //Nuevo boton
 
         botonListo.addActionListener(e ->
                 mostrarPantallaJuego()
@@ -77,7 +77,7 @@ public class PanelJuego extends JPanel {
         repaint();
     }
 
-    private void mostrarPantallaJuego() {
+    private void mostrarPantallaJuego() {  //Combinamos crear interfaz y actualizar pantalla
 
         removeAll();
 
@@ -92,31 +92,31 @@ public class PanelJuego extends JPanel {
 
     private void crearInterfaz() {
 
-        etiquetaTurno = new JLabel();
+        etiquetaTurno = new JLabel();  //Inicialmente vacio (indicará de quien es el turno)
 
         add(
                 etiquetaTurno,
                 BorderLayout.NORTH
         );
 
-        JPanel panelCentral =
+        JPanel panelCentral = 
                 new JPanel(
-                        new GridLayout(
+                        new GridLayout(  //1 fila y 2 columnas (mitad izquierda para tu tablero, mitad derecha para el tablero enemigo), con 10 píxeles de separación entre ambos
                                 1,
-                                2, //2 Columnas (tablero propio y tablero rival interactivo en la botonera)
+                                2, 
                                 10,
                                 10
                         )
                 );
 
-        crearTableroPropio(panelCentral);
-        crearBotoneraDisparo(panelCentral);
+        crearTableroPropio(panelCentral); //Columna 1
+        crearBotoneraDisparo(panelCentral); //Columna 2
 
         add(panelCentral,BorderLayout.CENTER);
 
-        etiquetaResultado =
+        etiquetaResultado = 
                 new JLabel(
-                        "Esperando disparo..."
+                        "Esperando disparo..."  //Valor inicial antes de disparar
                 );
 
         add(
@@ -128,21 +128,21 @@ public class PanelJuego extends JPanel {
     private void crearTableroPropio(
             JPanel panelCentral) {
 
-        JPanel panelPropio = new JPanel(new BorderLayout());
+        JPanel panelPropio = new JPanel(new BorderLayout());  //Sub panel de la izquierda
 
         JLabel tituloPropio = new JLabel("Tu tablero", SwingConstants.CENTER);
 
-        tableroPropio = new JTextArea();
+        tableroPropio = new JTextArea();  //Area donde se alojará el tablero propio dibujado en ASCII
 
-        tableroPropio.setEditable(false);
+        tableroPropio.setEditable(false);  //Impide escritura en ese tablero propio
 
-        tableroPropio.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 14));
+        tableroPropio.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 14));  // MONOSPACED hace que todas las letras y espacios midan exactamente los mismos píxeles de ancho
 
         panelPropio.add(tituloPropio, BorderLayout.NORTH);
 
-        panelPropio.add(new JScrollPane(tableroPropio), BorderLayout.CENTER);
+        panelPropio.add(new JScrollPane(tableroPropio), BorderLayout.CENTER);  //Envuelve el JTextArea en un panel con barras de desplazamiento por si la ventana se achica y el texto no entra completo.
 
-        panelCentral.add(panelPropio);
+        panelCentral.add(panelPropio);  //Lo mete en la primera colu,na
     }
 
     private void crearBotoneraDisparo(JPanel panelCentral) {
@@ -155,18 +155,16 @@ public class PanelJuego extends JPanel {
 
         botonesDisparo = new JButton[10][10];
 
-        panelDisparos.add( new JLabel(""));
+        panelDisparos.add( new JLabel(""));  //Casilla vacia arriba a la izquierda
 
-        for (int columna = 1; columna <= 10; columna++) {
+        for (int columna = 1; columna <= 10; columna++) {  //Los numeros de arriba
 
             JLabel numero = new JLabel(String.valueOf(columna), SwingConstants.CENTER);
 
             panelDisparos.add(numero);
         }
 
-        for (int fila = 0;
-                fila < 10;
-                fila++) {
+        for (int fila = 0; fila < 10; fila++) {  //Agregamos las letras de la izquierda
 
             JLabel letra =
                     new JLabel(
@@ -178,17 +176,15 @@ public class PanelJuego extends JPanel {
 
             panelDisparos.add(letra);
 
-            for (int columna = 0; columna < 10; columna++) {
+            for (int columna = 0; columna < 10; columna++) {  //Aprovechamos el for que recorre las filas para ira gregando los botones
 
                 JButton boton = new JButton();
 
                 botonesDisparo[fila][columna] = boton;
 
-                final int filaSeleccionada =
-                        fila;
+                final int filaSeleccionada = fila;
 
-                final int columnaSeleccionada =
-                        columna;
+                final int columnaSeleccionada = columna;
 
                 boton.addActionListener(e ->
                         disparar(filaSeleccionada, columnaSeleccionada)
@@ -198,11 +194,11 @@ public class PanelJuego extends JPanel {
             }
         }
 
-        contenedorRival.add(tituloRival, BorderLayout.NORTH);
+        contenedorRival.add(tituloRival, BorderLayout.NORTH);  //Nombre del rival arriba del tablero botonera
 
-        contenedorRival.add(panelDisparos, BorderLayout.CENTER);
+        contenedorRival.add(panelDisparos, BorderLayout.CENTER);  //Botonera
 
-        panelCentral.add(contenedorRival);
+        panelCentral.add(contenedorRival); //Agregamos el panel a la derecha 
     }
 
     private void disparar(int fila, int columna) {
@@ -214,16 +210,16 @@ public class PanelJuego extends JPanel {
 
         try {
 
-            Resultado resultado =partida.disparar(coordenada);
+            Resultado resultado = partida.disparar(coordenada); //De la clase partida
 
             resumenUltimoTurno = jugadorQueDispara.getNombre() + " disparo en " + coordenada + ".\nResultado: " + resultado+ "."; // Guarda la informacion que vera el siguiente jugador
 
-            actualizarTableros();
+            actualizarTableros(); //Vuelve a dibujar el JTextArea de la izquierda
 
-            JOptionPane.showMessageDialog(
+            JOptionPane.showMessageDialog(  //una ventana emergente frenando el juego hasta que apretás Aceptar
                     this,
                     "Resultado: "
-                            + resultado
+                            + resultado  //En donde cayó
             );
 
             if (partida.termino()) {
@@ -233,7 +229,7 @@ public class PanelJuego extends JPanel {
                 return;
             }
 
-            partida.cambiarTurno();
+            partida.cambiarTurno();  //Se invierten los roles
 
             mostrarPantallaEspera();
 
@@ -296,8 +292,8 @@ public class PanelJuego extends JPanel {
 
         tableroPropio.setText(
                 actual
-                        .getTablero()
-                        .dibujar(true)
+                .getTablero()
+                .dibujar(true)
         );
 
     }
@@ -321,7 +317,7 @@ public class PanelJuego extends JPanel {
 
             actualizarBotoneraRival();   // Muestra tambien el ultimo disparo, el que termino la partida
 
-            desactivarDisparos();
+            desactivarDisparos();  //Desactivamos todas las casillas para no poder disparar mas
 
             mostrarBotonVolver();
 
@@ -341,14 +337,14 @@ public class PanelJuego extends JPanel {
 
         botonVolver.addActionListener(e -> ventana.volverAlInicio());
 
-        remove(etiquetaResultado);              // En la zona de abajo va el boton en lugar de la etiqueta
+        remove(etiquetaResultado);              // Sacamos el mensaje de abajo que muestra el resultado para reemplazarlo por el botón de volver 
         add(botonVolver, BorderLayout.SOUTH);
 
         revalidate();
         repaint();
     }
 
-    private void desactivarDisparos() {
+    private void desactivarDisparos() {  //Recorre todas las casillas desactivandolas para no poder disparar ya que terminó la partida
 
         for (int fila = 0;
                 fila < 10;

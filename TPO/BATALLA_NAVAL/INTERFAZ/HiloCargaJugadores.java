@@ -14,7 +14,7 @@ import TPO.BATALLA_NAVAL.CLASES.ArchivoJugadores;
 // la ventana se congelaria. Por eso el archivo se lee en este hilo separado.
 public class HiloCargaJugadores extends Thread {
 
-    private ArchivoJugadores archivo;
+    private ArchivoJugadores archivo;  //Referencia al objeto que lee el archivo
     private PanelInicio panel;
 
     public HiloCargaJugadores(ArchivoJugadores archivo, PanelInicio panel) {
@@ -29,11 +29,11 @@ public class HiloCargaJugadores extends Thread {
 
         try {
 
-            ArrayList<String> nombres = archivo.leerJugadores();
+            ArrayList<String> nombres = archivo.leerJugadores();  //Lista con los nombres de los jugadores 
 
             // Regla de Swing: la ventana solo se toca desde su propio hilo.
             // invokeLater le pasa el trabajo al hilo de la ventana para que lo haga el.
-            SwingUtilities.invokeLater(() -> panel.mostrarJugadores(nombres));
+            SwingUtilities.invokeLater(() -> panel.mostrarJugadores(nombres));  //Mostramos la lista en panel inicio
 
         } catch (IOException e) {
 

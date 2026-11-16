@@ -10,13 +10,13 @@ public class FlotaImp implements FlotaInterfaz {
     private ArrayList<Barco> barcos;
 
     public FlotaImp() {
-        barcos = new ArrayList<Barco>();
+        barcos = new ArrayList<Barco>();  //Creamos la lista vacia de los barcos
     }
 
     @Override
     public boolean agregarBarco(Barco barco) {
 
-        if (estaCompleta()) {
+        if (estaCompleta()) {  //Si son 4
             throw new IllegalStateException( "La flota ya esta completa");
         }
 
@@ -27,19 +27,19 @@ public class FlotaImp implements FlotaInterfaz {
 
     @Override
     public boolean estaCompleta() {
-        return barcos.size() == 4;
+        return barcos.size() == 4;  //Método propio de ArrayList
     }
 
     @Override
     public boolean estaHundida() {
 
-        if (barcos.isEmpty()) {
+        if (barcos.isEmpty()) {  //Método porpio de ArrayList
             return false;
         }
 
-        for (Barco barco : barcos) {
+        for (Barco barco : barcos) {  //For each barco en barcos
 
-            if (!barco.estaHundido()) {
+            if (!barco.estaHundido()) {  //Con que uno no esté hundido alcanza para que la flota no esté hundida
                 return false;
             }
         }

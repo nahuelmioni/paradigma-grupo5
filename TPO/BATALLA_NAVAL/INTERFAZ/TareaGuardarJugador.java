@@ -11,30 +11,30 @@ import TPO.BATALLA_NAVAL.CLASES.JugadorExistenteException;
 // Esta clase es solo la TAREA; el hilo se crea afuera con:
 //     new Thread(new TareaGuardarJugador(...)).start();
 // (ver PanelInicio.crearJugador). Escribe el jugador nuevo en el archivo sin congelar la ventana.
-public class TareaGuardarJugador implements Runnable {
+public class TareaGuardarJugador implements Runnable {  //Tarea ejecutable por un hilo
 
     private ArchivoJugadores archivo;
     private String nombre;
     private PanelInicio panel;
 
-    public TareaGuardarJugador(ArchivoJugadores archivo, String nombre, PanelInicio panel) {
+    public TareaGuardarJugador(ArchivoJugadores archivo, String nombre, PanelInicio panel) {  //Constructor
         this.archivo = archivo;
         this.nombre = nombre;
         this.panel = panel;
     }
 
-    @Override
+    @Override  //Run que viene de runeable
     public void run() {
 
         try {
 
-            archivo.agregarJugador(nombre);
+            archivo.agregarJugador(nombre);  //De la clase ArchivoJugadores
 
-            SwingUtilities.invokeLater(() -> panel.jugadorCreado(nombre));
+            SwingUtilities.invokeLater(() -> panel.jugadorCreado(nombre));  //Método del panel inicio
 
         } catch (JugadorExistenteException e) {   // Excepcion propia: el nombre ya estaba guardado
 
-            SwingUtilities.invokeLater(() -> panel.mostrarError(e.getMessage()));
+            SwingUtilities.invokeLater(() -> panel.mostrarError(e.getMessage()));  //Método de panel inicio
 
         } catch (IOException e) {                 // Excepcion comun: fallo al escribir el archivo
 

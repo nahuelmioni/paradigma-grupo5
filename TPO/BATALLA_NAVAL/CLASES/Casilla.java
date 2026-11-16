@@ -9,8 +9,8 @@ public class Casilla {
     private boolean recibioBomba;
 
     public Casilla() {
-        this.elemento = new Agua();
-        this.recibioBomba = false;
+        this.elemento = new Agua();  //Arranca en agua por default
+        this.recibioBomba = false;   //Al principion no recibió bomba
     }
 
     public boolean estaLibre() {
@@ -34,7 +34,7 @@ public class Casilla {
 
     public char getSimbolo(boolean esPropio) {
 
-        if (!esPropio && !recibioBomba) {
+        if (!esPropio && !recibioBomba) {  //Si es el campo sival y nunca disparaste ahi solo puede ser un guión
             return '~';
         }
 

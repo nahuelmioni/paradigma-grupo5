@@ -34,7 +34,7 @@ public class Partida {
     }
 
     public Resultado disparar(Coordenada coordenada)
-            throws CasillaYaAtacadaException {
+            throws CasillaYaAtacadaException {  //Obliga a panelJuego usar try cuando use "disparar"
 
         Jugador rival = getRivalActual();
 
@@ -63,14 +63,14 @@ public class Partida {
 
         while (!termino()) {
 
-            Coordenada coordenada = generarCoordenadaAleatoria(destino.getTablero());
+            Coordenada coordenada = generarCoordenadaAleatoria(destino.getTablero());  //Si o si será una coordenada que no hayan atacado
             Resultado resultado = destino.getTablero().recibirBomba(coordenada);
 
             if (resultado.getTipo() != Resultado.TRAMPOLIN) {
                 return;
             }
 
-            Jugador auxiliar = destino;  //Cuando cae en otro trampolin, invierte roles
+            Jugador auxiliar = destino;  //Cuando cae en otro trampolin, invierte roles y ejecuta nuevamente
             destino = otroTablero;
             otroTablero = auxiliar;
         }
@@ -101,7 +101,7 @@ public class Partida {
         }
     }
 
-    public boolean termino() {
+    public boolean termino() {  //Chequeamos si alguno perdió
         return jugador1.perdio() || jugador2.perdio();
     }
 

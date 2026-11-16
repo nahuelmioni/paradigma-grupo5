@@ -10,7 +10,6 @@ class Main {  // Modificador default: la clase solo es visible dentro del paquet
 
         // La ventana se crea dentro del hilo de Swing (Event Dispatch Thread), como pide Swing.
         SwingUtilities.invokeLater(() -> {
-
             VentanaPrincipal ventana = new VentanaPrincipal();
             ventana.setVisible(true);
         });

@@ -10,7 +10,7 @@ public class Tablero {
 
     public static final int TAMANIO = 10;
 
-    private Casilla[][] casillas;
+    private Casilla[][] casillas;  //Matriz de casillas
     private FlotaImp flota;
     
 
@@ -71,7 +71,7 @@ public class Tablero {
         return true;
     }
 
-    private boolean hayLugar(Coordenada inicio, int largo, boolean horizontal) {
+    private boolean hayLugar(Coordenada inicio, int largo, boolean horizontal) {  //Para ver si el barco entra en donde se quiere meter
 
         for (int i = 0; i < largo; i++) {
 
@@ -84,18 +84,18 @@ public class Tablero {
                 fila = fila + i;
             }
 
-            if (fila < 0 || fila >= TAMANIO ||
+            if (fila < 0 || fila >= TAMANIO ||         //Chequeamos si nos fuimos de rango
                 columna < 0 || columna >= TAMANIO) {
 
                 return false;
             }
 
-            if (!casillas[fila][columna].estaLibre()) {
+            if (!casillas[fila][columna].estaLibre()) {  //Chequeamos si hay algo en la casilla 
                 return false;
             }
         }
 
-        return true;
+        return true;  //No saltó ningun fuera de rango u ocupado
     }
 
     public boolean yaRecibioBomba(Coordenada coordenada) {
@@ -121,7 +121,7 @@ public class Tablero {
         return flota.estaHundida(); //Metodo del TDA
     }
 
-    public String dibujar(boolean esPropio) {
+    public String dibujar(boolean esPropio) {   //Dibujo del tablero como un solo string
 
         String dibujo = "   1 2 3 4 5 6 7 8 9 10\n";
 

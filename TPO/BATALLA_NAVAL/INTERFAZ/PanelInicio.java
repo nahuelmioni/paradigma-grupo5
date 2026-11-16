@@ -15,13 +15,13 @@ import javax.swing.SwingConstants;
 import TPO.BATALLA_NAVAL.CLASES.ArchivoJugadores;
 import TPO.BATALLA_NAVAL.CLASES.Jugador;
 
-public class PanelInicio extends JPanel {
+public class PanelInicio extends JPanel {  //JPanel = Contenedor rectangular donde pones botones, textos y listas
 
-    private JComboBox<String> listaJugador1;
+    private JComboBox<String> listaJugador1;  //Menu desplegable para elegir nombre que solo va a guardar <String>
     private JComboBox<String> listaJugador2;
     private JButton botonCrearJugador;
     private JButton botonComenzar;
-    private JLabel etiquetaEstado;
+    private JLabel etiquetaEstado;  //Etiqueta fija donde mostramos mensajes como "Cargando jugadores...""
 
     private VentanaPrincipal ventana;
     private ArchivoJugadores archivo;
@@ -33,20 +33,16 @@ public class PanelInicio extends JPanel {
 
         setLayout(new GridBagLayout());   // Centra el formulario en la ventana
 
-        JPanel formulario = new JPanel(new GridLayout(8, 1, 10, 10));
-        formulario.setPreferredSize(new Dimension(420, 380));
+        JPanel formulario = new JPanel(new GridLayout(8, 1, 10, 10));  //8 filas y 1 columna, con 10 píxeles de separación horizontal y 10 de separación vertical entre cada fila.
+        formulario.setPreferredSize(new Dimension(420, 380));   //Limitamos el espacio que ocupa el cuestionario del menu
 
         JLabel titulo = new JLabel("BATALLA NAVAL CON TRAMPOLINES", SwingConstants.CENTER);
-
         JLabel textoJugador1 = new JLabel("Jugador 1:");
         listaJugador1 = new JComboBox<String>();
-
         JLabel textoJugador2 = new JLabel("Jugador 2:");
         listaJugador2 = new JComboBox<String>();
-
         botonCrearJugador = new JButton("Crear jugador nuevo");
         botonComenzar = new JButton("Comenzar partida");
-
         etiquetaEstado = new JLabel("Cargando jugadores...", SwingConstants.CENTER);
 
         formulario.add(titulo);
@@ -60,10 +56,10 @@ public class PanelInicio extends JPanel {
 
         add(formulario);
 
-        botonCrearJugador.addActionListener(e -> crearJugador());
+        botonCrearJugador.addActionListener(e -> crearJugador());  //Conectamos el botón con la acción que se debe ejecutar cuando lo aprieten
         botonComenzar.addActionListener(e -> comenzarPartida());
 
-        bloquearControles(true);   // Mientras se lee el archivo no se puede tocar nada
+        bloquearControles(true);   // Mientras se lee el archivo no se puede tocar nada (Deshabilitamos botones)
 
         HiloCargaJugadores hiloCarga = new HiloCargaJugadores(archivo, this);
         hiloCarga.start();         // start() crea el hilo nuevo, y ese hilo ejecuta run()
@@ -75,7 +71,7 @@ public class PanelInicio extends JPanel {
     // que es donde estan HiloCargaJugadores y TareaGuardarJugador.
     // ---------------------------------------------------------------------------------
 
-    void mostrarJugadores(ArrayList<String> nombres) {
+    void mostrarJugadores(ArrayList<String> nombres) {   //Agregamos todos los nombres de jugadores.txt a los dos desplegables
 
         for (String nombre : nombres) {
             listaJugador1.addItem(nombre);
@@ -83,20 +79,20 @@ public class PanelInicio extends JPanel {
         }
 
         if (nombres.size() >= 2) {
-            listaJugador2.setSelectedIndex(1);   // Que no arranquen los dos con el mismo jugador
+            listaJugador2.setSelectedIndex(1);   // Selecciona el segundo jugador en la lista del jugador 2
         }
     }
 
-    void jugadorCreado(String nombre) {
+    void jugadorCreado(String nombre) {   //Agregamos el jugador recien creado a los desplegables
 
         listaJugador1.addItem(nombre);
         listaJugador2.addItem(nombre);
 
-        if (listaJugador1.getSelectedItem().equals(listaJugador2.getSelectedItem())) {
+        if (listaJugador1.getSelectedItem().equals(listaJugador2.getSelectedItem())) {  //Si ambos desplegables tenian seleccionado el mismo nombre, hace que el segundo seleccione el que se avaba de crear
             listaJugador2.setSelectedItem(nombre);
         }
 
-        etiquetaEstado.setText("Se guardo a " + nombre + ". Jugadores guardados: " + listaJugador1.getItemCount());
+        etiquetaEstado.setText("Se guardo a " + nombre + ". Jugadores guardados: " + listaJugador1.getItemCount());  //Cambiamos la etiqueta de abajo que actualiza lo ultimo que se hizo
     }
 
     void mostrarError(String mensaje) {
@@ -122,7 +118,7 @@ public class PanelInicio extends JPanel {
 
     private void crearJugador() {
 
-        String nombre = JOptionPane.showInputDialog(this, "Nombre del jugador nuevo:");
+        String nombre = JOptionPane.showInputDialog(this, "Nombre del jugador nuevo:");   //Ventana emergente para escribir
 
         if (nombre == null) {
             return;   // Apreto "Cancelar"
@@ -138,14 +134,14 @@ public class PanelInicio extends JPanel {
         bloquearControles(true);
         etiquetaEstado.setText("Guardando jugador...");
 
-        // Forma 2 de crear un hilo: se le pasa un Runnable (la tarea) al constructor de Thread.
+        // Se crea el hilo que chequea los nombres del jugadores.txt
         Thread hiloGuardado = new Thread(new TareaGuardarJugador(archivo, nombre, this), "Hilo-GuardarJugador");
-        hiloGuardado.start();
+        hiloGuardado.start();  //Se ejecuta el run para agregar el nombre al jugadores.txt
     }
 
     private void comenzarPartida() {
 
-        // Casteo: getSelectedItem() devuelve Object, y sabemos que en la lista solo hay String.
+        // getSelectedItem() devuelve Object, y lo pasamos a string.
         String nombreJugador1 = (String) listaJugador1.getSelectedItem();
         String nombreJugador2 = (String) listaJugador2.getSelectedItem();
 
@@ -165,7 +161,7 @@ public class PanelInicio extends JPanel {
         Jugador jugador1 = new Jugador(nombreJugador1);
         Jugador jugador2 = new Jugador(nombreJugador2);
 
-        ventana.iniciarPreparacion(jugador1, jugador2);
+        ventana.iniciarPreparacion(jugador1, jugador2);  //Le pide a ventana que reemplace PanelInicio por PanelPreparacion
     }
 
     private void actualizarEstado() {

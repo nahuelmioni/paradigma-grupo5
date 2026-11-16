@@ -4,7 +4,7 @@ import TPO.BATALLA_NAVAL.CLASES.ELEMENTOS_MARINOS.Barco;
 
 import java.util.ArrayList;
 
-public interface FlotaInterfaz {
+public interface FlotaInterfaz {  //Encapsulamos los datos con la interfaz
 
     boolean agregarBarco(Barco barco);
 

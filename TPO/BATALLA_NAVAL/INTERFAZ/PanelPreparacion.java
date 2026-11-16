@@ -46,10 +46,7 @@ public class PanelPreparacion extends JPanel {
             4
     };
 
-    public PanelPreparacion(
-            VentanaPrincipal ventana,
-            Jugador jugador1,
-            Jugador jugador2) {
+    public PanelPreparacion(VentanaPrincipal ventana, Jugador jugador1, Jugador jugador2) {   //Constructor
 
         this.ventana = ventana;
 
@@ -66,11 +63,11 @@ public class PanelPreparacion extends JPanel {
         mostrarPantallaEspera();
     }
 
-    private void mostrarPantallaEspera() {
+    private void mostrarPantallaEspera() {  //Entre turno y turno
 
-        removeAll();
+        removeAll();  //Porque va a ir actualizandose
 
-        setLayout(new BorderLayout());
+        setLayout(new BorderLayout());  //Divide el panel en arriba, abajo, izquierda, derecha y centro
 
         JLabel mensaje = new JLabel(
                 jugadorActual.getNombre()
@@ -81,17 +78,17 @@ public class PanelPreparacion extends JPanel {
         JButton botonListo = new JButton("Estoy listo");
 
         botonListo.addActionListener(e ->
-                mostrarPantallaPreparacion()
+                mostrarPantallaPreparacion()  //Agregamos la accion al botón de estar listo
         );
 
-        add(mensaje, BorderLayout.CENTER);
+        add(mensaje, BorderLayout.CENTER);   //Agregamos los botones
         add(botonListo, BorderLayout.SOUTH);
 
         revalidate();
         repaint();
     }
 
-    private void mostrarPantallaPreparacion() {
+    private void mostrarPantallaPreparacion() {  //Combinado entre crear interfaz y actualizar informacion
 
         removeAll();
 
@@ -106,8 +103,8 @@ public class PanelPreparacion extends JPanel {
 
     private void crearInterfaz() {
 
-        JPanel panelSuperior =
-                new JPanel(new GridLayout(3, 1, 5, 5));
+        JPanel panelSuperior =    //sub-panel rectangular para agrupar los controles de arriba
+                new JPanel(new GridLayout(3, 1, 5, 5));  //3 filas y 1 columna, con 5 píxeles de separación horizontal y 5 vertical.
 
         etiquetaJugador = new JLabel();
         etiquetaInstruccion = new JLabel();
@@ -115,7 +112,7 @@ public class PanelPreparacion extends JPanel {
         botonOrientacion =
                 new JButton("Orientacion: Horizontal");
 
-        botonOrientacion.addActionListener(e ->
+        botonOrientacion.addActionListener(e ->   //Le damos la opcion de cambiar entre vertical y horizontal
                 cambiarOrientacion()
         );
 
@@ -123,27 +120,27 @@ public class PanelPreparacion extends JPanel {
         panelSuperior.add(etiquetaInstruccion);
         panelSuperior.add(botonOrientacion);
 
-        add(panelSuperior, BorderLayout.NORTH);
+        add(panelSuperior, BorderLayout.NORTH);   //Agregamos el panel superior a la parte de arriba del layout
 
         JPanel panelTablero =
-                new JPanel(new GridLayout(11, 11));
+                new JPanel(new GridLayout(11, 11));  //11 filas y 11 columnas
 
-        botonesTablero = new JButton[10][10];
+        botonesTablero = new JButton[10][10];  //Reservamos la matriz
 
-        panelTablero.add(new JLabel(""));
+        panelTablero.add(new JLabel(""));   //Primera fila y columna en blanco
 
         for (int columna = 1; columna <= 10; columna++) {
 
-            JLabel numero =
+            JLabel numero =  //Ponemos los numeros de arriba del tablero
                     new JLabel(
                             String.valueOf(columna),
-                            SwingConstants.CENTER
+                            SwingConstants.CENTER  //Centra el numero en su celda
                     );
 
             panelTablero.add(numero);
         }
 
-        for (int fila = 0; fila < 10; fila++) {
+        for (int fila = 0; fila < 10; fila++) {  //Lo mismo pero con las letras en la izquierda
 
             JLabel letra =
                     new JLabel(
@@ -155,12 +152,13 @@ public class PanelPreparacion extends JPanel {
 
             panelTablero.add(letra);
 
-            for (int columna = 0; columna < 10; columna++) {
+            for (int columna = 0; columna < 10; columna++) {  //Aprovechamos el bucle para poner los botones del tablero
 
-                JButton boton = new JButton();
+                JButton boton = new JButton();  //Nuevo boton
 
-                botonesTablero[fila][columna] = boton;
+                botonesTablero[fila][columna] = boton;  //Guardamos en matriz
 
+                //Tomamos valores fijos y finales para esa casilla
                 final int filaSeleccionada = fila;
                 final int columnaSeleccionada = columna;
 
@@ -178,7 +176,7 @@ public class PanelPreparacion extends JPanel {
         add(panelTablero, BorderLayout.CENTER);
     }
 
-    private void cambiarOrientacion() {
+    private void cambiarOrientacion() {  //Cambiamos orientacion al colocar los barcos
 
         horizontal = !horizontal;
 
@@ -196,14 +194,12 @@ public class PanelPreparacion extends JPanel {
         }
     }
 
-    private void seleccionarCasilla(
-            int fila,
-            int columna) {
+    private void seleccionarCasilla(int fila, int columna) {  //Accion que se da cuando se aprieta una casilla en la preparacion
 
         Coordenada coordenada =
                 new Coordenada(fila, columna);
 
-        if (indiceBarco < 4) {
+        if (indiceBarco < 4) {  //0, 1, 2, 3 son barcos
 
             colocarBarco(coordenada);
 
@@ -219,7 +215,7 @@ public class PanelPreparacion extends JPanel {
         try {
 
             int largo =
-                    largosBarcos[indiceBarco];
+                    largosBarcos[indiceBarco];  //Largo del barco actual
 
             Barco barco = new Barco(
                     nombresBarcos[indiceBarco],
@@ -245,7 +241,7 @@ public class PanelPreparacion extends JPanel {
                 return;
             }
 
-            marcarBarco(
+            marcarBarco(   //Colocamos la B
                     coordenada,
                     largo,
                     horizontal
@@ -253,7 +249,7 @@ public class PanelPreparacion extends JPanel {
 
             indiceBarco++;
 
-            actualizarInformacion();
+            actualizarInformacion();  //Siguiente elemento a colocar
 
         } catch (IllegalArgumentException e) {
 
@@ -272,7 +268,7 @@ public class PanelPreparacion extends JPanel {
         int fila = coordenada.getFila();
         int columna = coordenada.getColumna();
 
-        for (int i = 0; i < largo; i++) {
+        for (int i = 0; i < largo; i++) {  //Colocamos todas las B en donde esté el barco
 
             if (horizontal) {
 
@@ -320,7 +316,7 @@ public class PanelPreparacion extends JPanel {
         }
     }
 
-    private void actualizarInformacion() {
+    private void actualizarInformacion() {  //Explica el siguiente paso en la preparación (colocar barco y cual, o trampolín y cuantos quedan)
 
         etiquetaJugador.setText(
                 "Preparacion de: "
@@ -352,9 +348,9 @@ public class PanelPreparacion extends JPanel {
 
     private void terminarPreparacionJugador() {
 
-        if (jugadorActual == jugador1) {
+        if (jugadorActual == jugador1) {  
 
-            jugadorActual = jugador2;
+            jugadorActual = jugador2; //Le toca al jugador 2
 
             indiceBarco = 0;
             trampolinesColocados = 0;
@@ -362,9 +358,9 @@ public class PanelPreparacion extends JPanel {
 
             mostrarPantallaEspera();
 
-        } else {
+        } else {  //Terminó la preparación
 
-            ventana.iniciarJuego(
+            ventana.iniciarJuego(  
                     jugador1,
                     jugador2
             );
